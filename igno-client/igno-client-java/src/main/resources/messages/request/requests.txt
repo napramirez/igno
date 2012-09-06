@@ -1,0 +1,20 @@
+# Test message
+#
+request_1.xml
+
+# POS message
+#
+# 0100_1.xml
+
+# ATM messages
+#
+# 0200a_1.xml
+# 0200p_1.xml
+
+# FHM message
+#
+# 0300_1.xml
+
+# Network message
+#
+# 0800_1.xml

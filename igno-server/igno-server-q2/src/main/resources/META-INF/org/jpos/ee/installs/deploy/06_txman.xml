@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<txnmgr class="org.jpos.transaction.TransactionManager" logger="Q2">
+
+    <property name="space" value="tspace:default" />
+    <property name="queue" value="tx-queue" />
+    <property name="persistent-space" value="tspace:tx-queue" />
+    <property name="sessions" value="10" />
+
+    <participant class="com.napramirez.igno.server.transaction.participant.MessageSwitchParticipant" logger="Q2">
+        <property name="0100"   value="Authorization" />
+        <property name="0120"   value="AuthorizationAdvice" />
+        <property name="0121"   value="AuthorizationAdvice" />
+        <property name="0300"   value="FileUpdate" />
+        <property name="0800"   value="NetworkManagement" />
+
+        <property name="0200a"  value="ATMFinancialTransaction" />
+        <property name="0220a"  value="ATMFinancialTransactionAdvice" />
+        <property name="0221a"  value="ATMFinancialTransactionAdvice" />
+        <property name="0420a"  value="ATMReversalAdvice" />
+        <property name="0421a"  value="ATMReversalAdvice" />
+
+        <property name="0200p"  value="POSFinancialTransaction" />
+        <property name="0220p"  value="POSFinancialTransactionAdvice" />
+        <property name="0221p"  value="POSFinancialTransactionAdvice" />
+        <property name="0420p"  value="POSReversalAdvice" />
+        <property name="0421p"  value="POSReversalAdvice" />
+    </participant>
+    
+    <group name="Authorization"></group>
+    <group name="AuthorizationAdvice"></group>
+    <group name="FileUpdate"></group>
+    <group name="NetworkManagement"></group>
+    
+    <group name="test-group">
+        <participant class="com.napramirez.igno.server.transaction.participant.TestTransactionParticipant">
+        </participant>
+    </group>
+</txnmgr>

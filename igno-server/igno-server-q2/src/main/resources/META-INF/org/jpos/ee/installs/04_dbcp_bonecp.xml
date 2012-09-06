@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<connection-pool name="forpost" class="com.napramirez.igno.server.dbcp.bonecp.QBoneCPDataSource" logger="Q2">
+
+    <property name="jdbc.driver"                    value="com.mysql.jdbc.Driver" />
+    <property name="jdbc.url"                       value="jdbc:mysql://qadb.cwcu7htstnnx.us-east-1.rds.amazonaws.com/cp20" />
+    <property name="jdbc.user"                      value="cp20_stag_user" />
+    <property name="jdbc.password"                  value="h4yA9eSw" />
+
+    <property name="partition-count"                value="2" />
+    <property name="min-connections-per-partition"  value="5" />
+    <property name="max-connections-per-partition"  value="25" />
+    
+    <property name="acquire-increment"              value="5" />
+    <property name="statements-cache-size"          value="25" />
+    <property name="release-helper-threads"         value="1" />
+    
+    <property name="connection-test-statement"      value="/* ping *\/ SELECT 1" />
+
+</connection-pool>

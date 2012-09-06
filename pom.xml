@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.napramirez.igno</groupId>
+    <artifactId>igno</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Igno</name>
+    <description>ISO8583 Implementation System</description>
+    
+    <prerequisites>
+        <maven>3.0.3</maven>
+    </prerequisites>
+    
+    <scm>
+        <connection>scm:git:ssh://git@github.com:napramirez/igno.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:napramirez/igno.git</developerConnection>
+        <url>https://github.com/napramirez/igno</url>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>jpos.org</id>
+            <name>jPOS.org Public Maven Repository</name>
+            <url>http://jpos.org/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <developers>
+        <developer>
+            <id>napramirez</id>
+            <name>Nap Ramirez</name>
+            <email>napramirez@gmail.com</email>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>igno-common</module>
+        <module>igno-client</module>
+        <module>igno-server</module>
+    </modules>
+    
+    <properties>
+        <jpos.version>1.8.6</jpos.version>
+        <jposee.version>2.0.1-SNAPSHOT</jposee.version>
+        <bonecp.version>0.7.1.RELEASE</bonecp.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jpos</groupId>
+                <artifactId>jpos</artifactId>
+                <version>${jpos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jpos.ee</groupId>
+                <artifactId>jposee-core</artifactId>
+                <version>${jposee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jpos.ee</groupId>
+                <artifactId>jposee-txn</artifactId>
+                <version>${jposee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jpos.ee</groupId>
+                <artifactId>jposee-db-mysql</artifactId>
+                <version>${jposee.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jolbox</groupId>
+                <artifactId>bonecp</artifactId>
+                <version>${bonecp.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jpos.ee.plugin</groupId>
+                    <artifactId>jposee-maven-plugin</artifactId>
+                    <version>${jposee.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+</project>
