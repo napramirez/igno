@@ -39,6 +39,7 @@
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="7, 11, 70" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
 
     <!-- ATM route -->
@@ -46,16 +47,19 @@
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 41, 43, 49, 60, 120" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="ATMFinancialTransactionAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 49, 60, 61, 100" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="ATMReversalAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 49, 60, 61, 90, 100, 120" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
 
     <!-- POS route -->
@@ -63,26 +67,31 @@
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 22, 25, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="AuthorizationAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="POSFinancialTransaction">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="POSFinancialTransactionAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     <group name="POSReversalAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 90, 100, 120, 121, 123, 124, 125" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
     
     <!-- From Host Maintenance -->
@@ -90,6 +99,7 @@
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="2, 7, 11, 39, 91, 101, 120" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
     </group>
 
     <!-- Catch All route -->
