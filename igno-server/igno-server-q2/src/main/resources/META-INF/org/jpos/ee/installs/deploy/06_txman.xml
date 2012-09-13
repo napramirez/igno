@@ -40,6 +40,7 @@
             <property name="requiredFields" value="7, 11, 70" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateNetworkMgmtParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.NetworkManagementProcessingParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
@@ -77,6 +78,7 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateAuthorizationParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationProcessingParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="AuthorizationAdvice">
