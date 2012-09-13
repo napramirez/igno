@@ -39,7 +39,7 @@ public class FieldValidatingParticipant
         {
             try
             {
-                int fieldValue = Integer.parseInt( requiredField );
+                int fieldValue = Integer.parseInt( requiredField.trim() );
 
                 if ( fieldValue < 0 )
                 {
