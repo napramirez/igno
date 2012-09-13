@@ -1,6 +1,6 @@
 # Test message
 #
-request_1.xml
+# request_1.xml
 
 # POS message
 #
@@ -18,3 +18,6 @@ request_1.xml
 # Network message
 #
 # 0800_1.xml
+0800_logon.xml
+0800_logout.xml
+0800_echo.xml
