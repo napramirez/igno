@@ -108,7 +108,7 @@ public class MessageSender
             if ( response != null )
             {
                 System.out.println( "Round trip completed in " + elapsedTime + "ms" );
-                // response.dump( System.out, "" );
+                response.dump( System.out, "" );
             }
             else
             {
