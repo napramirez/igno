@@ -40,7 +40,9 @@
             <property name="requiredFields" value="7, 11, 70" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateNetworkMgmtParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.NetworkManagementProcessingParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
 
     <!-- ATM route -->
@@ -50,6 +52,7 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMFinancialTxParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="ATMFinancialTransactionAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
@@ -57,6 +60,7 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMFinancialTxAdviceParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="ATMReversalAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
@@ -64,6 +68,7 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMReversalAdviceParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
 
     <!-- POS route -->
@@ -73,6 +78,8 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateAuthorizationParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationProcessingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="AuthorizationAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
@@ -80,24 +87,28 @@
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ValidateAuthorizationAdviceParticipant" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="POSFinancialTransaction">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="POSFinancialTransactionAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     <group name="POSReversalAdvice">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 90, 100, 120, 121, 123, 124, 125" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
     
     <!-- From Host Maintenance -->
@@ -106,12 +117,12 @@
             <property name="requiredFields" value="2, 7, 11, 39, 91, 101, 120" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
 
     <!-- Catch All route -->
     <group name="Unhandled">
-        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant">
-        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" />
     </group>
 
 </txnmgr>

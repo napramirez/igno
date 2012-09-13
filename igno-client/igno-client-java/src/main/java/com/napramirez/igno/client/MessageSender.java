@@ -192,6 +192,8 @@ public class MessageSender
         boolean isSimultaneous = true;
         String baseMessagePath = "messages/request/";
 
+        int messageCount = 0;
+
         List<String> requestFilenameList = getRequestFilenamesFromRequestFileList( baseMessagePath + "requests.txt" );
         for ( String requestFilename : requestFilenameList )
         {
@@ -204,8 +206,10 @@ public class MessageSender
             for ( int i = 0; i < ECHO_COUNT; i++ )
             {
                 ISOMsg requestClone = (ISOMsg) request.clone();
-                requestClone.set( 11, ISOUtil.padleft( Integer.toString( i ), 6, '0' ) );
+                requestClone.set( 11, ISOUtil.padleft( Integer.toString( messageCount ), 6, '0' ) );
                 requestClones.add( requestClone );
+
+                messageCount++;
             }
 
             for ( ISOMsg requestClone : requestClones )
