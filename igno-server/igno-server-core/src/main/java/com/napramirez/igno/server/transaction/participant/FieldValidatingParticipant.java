@@ -19,32 +19,44 @@ import com.napramirez.igno.server.transaction.TransactionContext;
 public class FieldValidatingParticipant
     implements TransactionParticipant, Configurable
 {
-    private String[] requiredFields;
+    private Configuration cfg;
+
+    private int[] requiredFields;
 
     public void setConfiguration( Configuration cfg )
         throws ConfigurationException
     {
-        String propRequiredFields = cfg.get( "requiredFields" );
-        requiredFields = propRequiredFields.trim().split( ", " );
+        this.cfg = cfg;
     }
 
     public int prepare( long id, Serializable context )
     {
-        if ( requiredFields == null || requiredFields.length == 0 )
+        String propRequiredFields = cfg.get( "requiredFields" );
+        if ( propRequiredFields == null || propRequiredFields.trim().length() == 0 )
         {
             return ABORTED;
         }
 
-        for ( String requiredField : requiredFields )
+        String[] requiredFieldStrings = propRequiredFields.trim().split( ", " );
+
+        if ( requiredFieldStrings == null || requiredFieldStrings.length == 0 )
+        {
+            return ABORTED;
+        }
+
+        requiredFields = new int[requiredFieldStrings.length];
+        for ( int i = 0; i < requiredFieldStrings.length; i++ )
         {
             try
             {
-                int fieldValue = Integer.parseInt( requiredField.trim() );
+                int fieldValue = Integer.parseInt( requiredFieldStrings[i].trim() );
 
                 if ( fieldValue < 0 )
                 {
                     return ABORTED;
                 }
+
+                requiredFields[i] = fieldValue;
             }
             catch ( NumberFormatException e )
             {
@@ -60,11 +72,11 @@ public class FieldValidatingParticipant
         TransactionContext ctx = (TransactionContext) context;
         ISOMsg isoMsg = (ISOMsg) ctx.get( "request" );
 
-        for ( String requiredField : requiredFields )
+        for ( int requiredField : requiredFields )
         {
             try
             {
-                String message = isoMsg.getString( Integer.parseInt( requiredField ) );
+                String message = isoMsg.getString( requiredField );
 
                 if ( StringUtils.isEmpty( message ) )
                 {
