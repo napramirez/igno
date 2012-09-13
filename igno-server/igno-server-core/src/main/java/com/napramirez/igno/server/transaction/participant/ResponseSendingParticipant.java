@@ -25,12 +25,6 @@ public class ResponseSendingParticipant
         }
         else
         {
-            ISOMsg response = (ISOMsg) ctx.get( "response" );
-            if ( response == null )
-            {
-                return ABORTED;
-            }
-
             ISOSource source = (ISOSource) ctx.tget( "isosource" );
             if ( source == null )
             {
