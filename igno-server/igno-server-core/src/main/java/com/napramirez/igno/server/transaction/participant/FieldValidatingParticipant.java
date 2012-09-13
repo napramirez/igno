@@ -2,10 +2,14 @@ package com.napramirez.igno.server.transaction.participant;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
+import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
+
+import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
  * FieldValidatingParticipant will check if all the required fields are present in the message.
@@ -53,7 +57,25 @@ public class FieldValidatingParticipant
 
     public void commit( long id, Serializable context )
     {
-        // TODO
+        TransactionContext ctx = (TransactionContext) context;
+        ISOMsg isoMsg = (ISOMsg) ctx.get( "request" );
+
+        for ( String requiredField : requiredFields )
+        {
+            try
+            {
+                String message = isoMsg.getString( Integer.parseInt( requiredField ) );
+
+                if ( StringUtils.isEmpty( message ) )
+                {
+                    throw new Exception();
+                }
+            }
+            catch ( Exception e )
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void abort( long id, Serializable context )
