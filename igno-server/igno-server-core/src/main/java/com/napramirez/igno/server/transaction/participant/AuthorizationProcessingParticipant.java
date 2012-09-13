@@ -10,7 +10,7 @@ import com.napramirez.igno.server.transaction.TransactionContext;
 public class AuthorizationProcessingParticipant
     extends StoredProcedureCallingParticipant
 {
-    public AuthorizationProcessingParticipant( String storedProcedure )
+    public AuthorizationProcessingParticipant()
     {
         super( "{ CALL pg_authorize(?, ?, ?, ?) }" );
     }
