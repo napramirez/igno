@@ -121,6 +121,7 @@
 
     <!-- Catch All route -->
     <group name="Unhandled">
+        <participant class="com.napramirez.igno.server.transaction.participant.TransactionAbortingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
 

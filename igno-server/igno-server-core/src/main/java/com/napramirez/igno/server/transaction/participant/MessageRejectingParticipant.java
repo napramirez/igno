@@ -30,7 +30,6 @@ public class MessageRejectingParticipant
      */
     public void commit( long id, Serializable context )
     {
-        prepareForAbort( id, context );
     }
 
     public void abort( long id, Serializable context )
