@@ -25,7 +25,7 @@ public class FieldValidatingParticipant
         throws ConfigurationException
     {
         String propRequiredFields = cfg.get( "requiredFields" );
-        requiredFields = propRequiredFields.split( "," );
+        requiredFields = propRequiredFields.trim().split( ", " );
     }
 
     public int prepare( long id, Serializable context )
