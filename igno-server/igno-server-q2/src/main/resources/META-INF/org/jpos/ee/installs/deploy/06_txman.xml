@@ -8,32 +8,121 @@
     <property name="sessions" value="10" />
 
     <participant class="com.napramirez.igno.server.transaction.participant.MessageSwitchParticipant" logger="Q2">
-        <property name="0100"   value="Authorization" />
-        <property name="0120"   value="AuthorizationAdvice" />
-        <property name="0121"   value="AuthorizationAdvice" />
-        <property name="0300"   value="FileUpdate" />
+
+        <!-- Network Management route -->
         <property name="0800"   value="NetworkManagement" />
 
+        <!-- ATM route -->
         <property name="0200a"  value="ATMFinancialTransaction" />
         <property name="0220a"  value="ATMFinancialTransactionAdvice" />
         <property name="0221a"  value="ATMFinancialTransactionAdvice" />
         <property name="0420a"  value="ATMReversalAdvice" />
         <property name="0421a"  value="ATMReversalAdvice" />
 
+        <!-- POS route -->
+        <property name="0100"   value="Authorization" />
+        <property name="0120"   value="AuthorizationAdvice" />
+        <property name="0121"   value="AuthorizationAdvice" />
         <property name="0200p"  value="POSFinancialTransaction" />
         <property name="0220p"  value="POSFinancialTransactionAdvice" />
         <property name="0221p"  value="POSFinancialTransactionAdvice" />
         <property name="0420p"  value="POSReversalAdvice" />
         <property name="0421p"  value="POSReversalAdvice" />
+
+        <!-- From Host Maintenance route -->
+        <property name="0300"   value="FileUpdate" />
+
     </participant>
     
-    <group name="Authorization"></group>
-    <group name="AuthorizationAdvice"></group>
-    <group name="FileUpdate"></group>
-    <group name="NetworkManagement"></group>
-    
-    <group name="test-group">
-        <participant class="com.napramirez.igno.server.transaction.participant.TestTransactionParticipant">
+    <!-- Network Management route -->
+    <group name="NetworkManagement">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="7, 11, 70" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ValidateNetworkMgmtParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.NetworkManagementProcessingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
+
+    <!-- ATM route -->
+    <group name="ATMFinancialTransaction">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 41, 43, 49, 60, 120" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMFinancialTxParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="ATMFinancialTransactionAdvice">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 49, 60, 61, 100" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMFinancialTxAdviceParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="ATMReversalAdvice">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 49, 60, 61, 90, 100, 120" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ValidateATMReversalAdviceParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+
+    <!-- POS route -->
+    <group name="Authorization">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 22, 25, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ValidateAuthorizationParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationProcessingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="AuthorizationAdvice">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="POSFinancialTransaction">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="POSFinancialTransactionAdvice">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    <group name="POSReversalAdvice">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 90, 100, 120, 121, 123, 124, 125" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+    
+    <!-- From Host Maintenance -->
+    <group name="FileUpdate">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+            <property name="requiredFields" value="2, 7, 11, 39, 91, 101, 120" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+
+    <!-- Catch All route -->
+    <group name="Unhandled">
+        <participant class="com.napramirez.igno.server.transaction.participant.TransactionAbortingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
+    </group>
+
 </txnmgr>

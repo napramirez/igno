@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jpos.iso.BaseChannel;
 import org.jpos.iso.ISOChannel;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
@@ -43,6 +44,14 @@ public class MessageSender
 
     private static final long DEFAULT_TIMEOUT = 480000;
 
+    private static final String HEADER_NETWORK_MANAGEMENT = "ISO006000000";
+
+    private static final String HEADER_ATM = "ISO016000000";
+
+    private static final String HEADER_POS = "ISO026000000";
+
+    private static final String HEADER_FROM_HOST_MAINTENANCE = "ISO086000000";
+
     private LocalSpace<?, ?> space;
 
     private IgnoChannelAdaptor channelAdaptor;
@@ -54,6 +63,11 @@ public class MessageSender
     private ISOPackager packager;
 
     private ISOMsg message;
+
+    /**
+     * This is a hack. Headers cannot be defined using the mti. Default financial messages are ATM messages.
+     */
+    private boolean isAtm = true;
 
     public MessageSender( ISOMsg message, String id )
         throws Exception
@@ -85,6 +99,7 @@ public class MessageSender
 
         try
         {
+            setChannelHeader( message.getMTI() );
             ISOMsg response = mux.request( message, DEFAULT_TIMEOUT );
 
             long endTime = System.currentTimeMillis();
@@ -93,7 +108,7 @@ public class MessageSender
             if ( response != null )
             {
                 System.out.println( "Round trip completed in " + elapsedTime + "ms" );
-                // response.dump( System.out, "" );
+                response.dump( System.out, "" );
             }
             else
             {
@@ -108,6 +123,26 @@ public class MessageSender
         {
             mux.stop();
             channelAdaptor.stop();
+        }
+    }
+
+    private void setChannelHeader( String mti )
+    {
+        if ( mti.equals( "0800" ) )
+        {
+            ( (BaseChannel) channel ).setHeader( HEADER_NETWORK_MANAGEMENT );
+        }
+        else if ( mti.equals( "0300" ) )
+        {
+            ( (BaseChannel) channel ).setHeader( HEADER_FROM_HOST_MAINTENANCE );
+        }
+        else if ( isAtm )
+        {
+            ( (BaseChannel) channel ).setHeader( HEADER_ATM );
+        }
+        else
+        {
+            ( (BaseChannel) channel ).setHeader( HEADER_POS );
         }
     }
 
@@ -157,6 +192,8 @@ public class MessageSender
         boolean isSimultaneous = true;
         String baseMessagePath = "messages/request/";
 
+        int messageCount = 0;
+
         List<String> requestFilenameList = getRequestFilenamesFromRequestFileList( baseMessagePath + "requests.txt" );
         for ( String requestFilename : requestFilenameList )
         {
@@ -169,8 +206,10 @@ public class MessageSender
             for ( int i = 0; i < ECHO_COUNT; i++ )
             {
                 ISOMsg requestClone = (ISOMsg) request.clone();
-                requestClone.set( 11, ISOUtil.padleft( Integer.toString( i ), 6, '0' ) );
+                requestClone.set( 11, ISOUtil.padleft( Integer.toString( messageCount ), 6, '0' ) );
                 requestClones.add( requestClone );
+
+                messageCount++;
             }
 
             for ( ISOMsg requestClone : requestClones )
