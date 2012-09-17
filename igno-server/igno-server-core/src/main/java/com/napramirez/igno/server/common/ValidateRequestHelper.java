@@ -82,9 +82,22 @@ public class ValidateRequestHelper
             int length = isoFieldPackager.getLength();
             
             // check for message length
-            if ( length != message.length() )
+            if ( field == 2 || field == 32 || field == 35 || field == 100 || field == 102 
+            		|| field == 103 || field == 123 || field == 127 )
             {
-                throw new Exception( ValidateRequest.ErrorMsg.INVALID_LENGTH );
+                if ( length < message.length() )
+                {
+                    throw new Exception( ValidateRequest.ErrorMsg.INVALID_LENGTH );
+                }
+            }
+            else
+            {
+                // LLVAR fix = 54, 63
+                // LLLVAR fix = 122, 125, 126
+                if ( length != message.length() )
+                {
+                    throw new Exception( ValidateRequest.ErrorMsg.INVALID_LENGTH );
+                }
             }
             
             // check for format
