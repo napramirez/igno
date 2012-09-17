@@ -9,6 +9,8 @@ import org.jpos.core.ConfigurationException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 
+import com.napramirez.igno.server.common.ValidateRequest;
+import com.napramirez.igno.server.common.ValidateRequestHelper;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
@@ -22,6 +24,7 @@ public class FieldValidatingParticipant
     private Configuration cfg;
 
     private int[] requiredFields;
+    private int[] conditionalFields;
 
     public void setConfiguration( Configuration cfg )
         throws ConfigurationException
@@ -63,34 +66,61 @@ public class FieldValidatingParticipant
                 return ABORTED;
             }
         }
+        
+        // prepares the rest of the fields
+        String propCondtionalFields = cfg.get( "conditionalFields" );
+        String[] conditionalFieldStrings = propCondtionalFields.trim().split( ", " );
+        conditionalFields = new int[conditionalFieldStrings.length];
+        for ( int i = 0; i < conditionalFieldStrings.length; i++ )
+        {
+            try
+            {
+                int fieldValue = Integer.parseInt( conditionalFieldStrings[i].trim() );
+                
+                if ( fieldValue < 0 )
+                {
+                    return ABORTED;
+                }
+                conditionalFields[i] = fieldValue;
+            }
+            catch ( NumberFormatException e )
+            {
+                return ABORTED;
+            }
+        }
 
         return PREPARED;
     }
 
     public void commit( long id, Serializable context )
     {
-        TransactionContext ctx = (TransactionContext) context;
-        ISOMsg isoMsg = (ISOMsg) ctx.get( "request" );
-
-        for ( int requiredField : requiredFields )
+        TransactionContext ctx = ( TransactionContext ) context;
+        ISOMsg isoMsg = ( ISOMsg ) ctx.get( "request" );
+        try
         {
-            try
+            for ( int requiredField : requiredFields )
             {
                 String message = isoMsg.getString( requiredField );
 
                 if ( StringUtils.isEmpty( message ) )
                 {
-                    throw new Exception();
+                    throw new Exception( ValidateRequest.ErrorMsg.MISSING_FIELD );
                 }
             }
-            catch ( Exception e )
-            {
-                e.printStackTrace();
-            }
+            int[] fields = new int[requiredFields.length + conditionalFields.length];
+            System.arraycopy( requiredFields, 0, fields, 0, requiredFields.length );
+            System.arraycopy( conditionalFields, 0, fields, requiredFields.length, conditionalFields.length );
+            
+            ValidateRequestHelper.fieldValidation( fields, isoMsg );
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
         }
     }
 
     public void abort( long id, Serializable context )
     {
     }
+    
 }
