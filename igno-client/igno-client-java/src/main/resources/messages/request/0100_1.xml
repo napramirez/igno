@@ -23,7 +23,7 @@
     <field id="49"      value="840" />                  <!-- Transaction Currency Code, FIS only supports 840: USD -->
     <field id="60"      value="A 0000000000000000000" />
     <field id="61"      value="A 00000000000000000000" />
-    <field id="100"     value="1100000000000" />        <!-- Receiving Institution ID -->
+    <field id="100"     value="00000000000" />          <!-- Receiving Institution ID -->
     <field id="120"     value="A 0000000000000000000000000000000000" />
     <field id="121"     value="A 000000000000000000000" />
     <field id="124"     value="A 0000000000" />
