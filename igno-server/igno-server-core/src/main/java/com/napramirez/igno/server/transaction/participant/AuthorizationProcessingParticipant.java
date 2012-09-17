@@ -6,6 +6,7 @@ import java.sql.Types;
 import org.apache.commons.lang.StringUtils;
 import org.jpos.iso.ISOMsg;
 
+import com.napramirez.igno.server.common.constants.ResponseCode;
 import com.napramirez.igno.server.common.field.Track2Data;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
@@ -58,6 +59,9 @@ public class AuthorizationProcessingParticipant
 
             ISOMsg response = (ISOMsg) request.clone();
             response.setResponseMTI();
+
+            response.set( 38, "A00000" );
+            response.set( 39, isAuthorized ? ResponseCode.POS.APPROVED.toString() : ResponseCode.POS.DECLINE.toString() );
 
             ctx.put( "response", response );
         }
