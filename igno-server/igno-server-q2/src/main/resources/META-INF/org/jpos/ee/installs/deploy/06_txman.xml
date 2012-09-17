@@ -20,9 +20,9 @@
         <property name="0421a"  value="ATMReversalAdvice" />
 
         <!-- POS route -->
-        <property name="0100"   value="Authorization" />
-        <property name="0120"   value="AuthorizationAdvice" />
-        <property name="0121"   value="AuthorizationAdvice" />
+        <property name="0100p"  value="Authorization" />
+        <property name="0120p"  value="AuthorizationAdvice" />
+        <property name="0121p"  value="AuthorizationAdvice" />
         <property name="0200p"  value="POSFinancialTransaction" />
         <property name="0220p"  value="POSFinancialTransactionAdvice" />
         <property name="0221p"  value="POSFinancialTransactionAdvice" />
