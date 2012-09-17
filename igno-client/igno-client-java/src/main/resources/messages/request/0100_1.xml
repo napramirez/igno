@@ -12,8 +12,8 @@
     <field id="18"      value="0000" />                 <!-- Merchant type, this needs to be validated in the db -->
     <field id="22"      value="010" />                  <!-- POSEntryMode 01 Manual, 0 Unspecified -->
     <field id="25"      value="00" />                   <!-- POSConditionCode 00 is normal -->
-    <field id="32"      value="00000000000" />          <!-- Dummy Acquirer ID -->
-    <field id="35"      value="0123456789012345678=123=1507=000=0000" />        <!-- Track 2 data -->
+    <field id="32"      value="1100000000000" />          <!-- Dummy Acquirer ID -->
+    <field id="35"      value="370123456789012345678=12301507000000000" />      <!-- Track 2 data -->
     <field id="37"      value="A00000000000" />         <!-- Overridden by MessageSender -->
     <field id="41"      value="A 00000000000000" />     <!-- Dummy Acceptor Terminal ID -->
     <field id="43"      value="Owner-----------------City---------xxxyy" />     <!-- Card Acceptor Location -->
@@ -21,7 +21,7 @@
     <field id="49"      value="840" />                  <!-- Transaction Currency Code, FIS only supports 840: USD -->
     <field id="60"      value="A 0000000000000000000" />
     <field id="61"      value="A 00000000000000000000" />
-    <field id="100"     value="00000000000" />          <!-- Receiving Institution ID -->
+    <field id="100"     value="1100000000000" />        <!-- Receiving Institution ID -->
     <field id="120"     value="A 0000000000000000000000000000000000" />
     <field id="121"     value="A 000000000000000000000" />
     <field id="124"     value="A 0000000000" />
