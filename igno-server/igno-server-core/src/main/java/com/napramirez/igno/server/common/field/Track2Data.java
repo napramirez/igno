@@ -32,7 +32,6 @@ public class Track2Data
         pan = fields[0];
     }
 
-
     public int getLength()
     {
         return length;
