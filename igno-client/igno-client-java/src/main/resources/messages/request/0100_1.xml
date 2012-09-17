@@ -1,0 +1,43 @@
+<isomsg>
+
+    <!--  Mandatory  -->
+    <field id="0"       value="0100" />
+    <field id="3"       value="003030" />               <!-- Processing Code: Goods and Services, From Credit, To Credit -->
+    <field id="4"       value="000100000000" />         <!-- Transaction Amount: 1,000,000.00 -->
+    <field id="7"       value="0913100000" />           <!-- Dummy date, Sept 13, 10:00, but supposed to come from acquirer -->
+    <field id="11"      value="000000" />               <!-- Overridden by MessageSender -->
+    <field id="12"      value="100000" />               <!-- Dummy time, 10:00, but supposed to come from acquirer -->
+    <field id="13"      value="0913" />                 <!-- Dummy day, Sept 13, but supposed to come from acquirer -->
+    <field id="17"      value="0913" />                 <!-- Dummy day, Sept 13, but supposed to come from acquirer -->
+    <field id="18"      value="0000" />                 <!-- Merchant type, this needs to be validated in the db -->
+    <field id="22"      value="010" />                  <!-- POSEntryMode 01 Manual, 0 Unspecified -->
+    <field id="25"      value="00" />                   <!-- POSConditionCode 00 is normal -->
+    <field id="32"      value="00000000000" />          <!-- Dummy Acquirer ID -->
+    <field id="35"      value="0123456789012345678=123=1507=000=0000" />        <!-- Track 2 data -->
+    <field id="37"      value="A00000000000" />         <!-- Overridden by MessageSender -->
+    <field id="41"      value="A 00000000000000" />     <!-- Dummy Acceptor Terminal ID -->
+    <field id="43"      value="Owner-----------------City---------xxxyy" />     <!-- Card Acceptor Location -->
+    <field id="48"      value="A 0000000000000000000000000000" />
+    <field id="49"      value="840" />                  <!-- Transaction Currency Code, FIS only supports 840: USD -->
+    <field id="60"      value="A 0000000000000000000" />
+    <field id="61"      value="A 00000000000000000000" />
+    <field id="100"     value="00000000000" />          <!-- Receiving Institution ID -->
+    <field id="120"     value="A 0000000000000000000000000000000000" />
+    <field id="121"     value="A 000000000000000000000" />
+    <field id="124"     value="A 0000000000" />
+    <field id="125"     value="A 0000000000000" />
+    <field id="126"     value="A 000000000000000000000000000000000000000" />
+
+    <!-- Conditional -->
+    <!--<field id="2"       value="0000000000000000000" />-->
+    <!--<field id="14"      value="0000" />-->
+    <!--<field id="15"      value="0000" />-->
+    <!--<field id="27"      value="0" />-->
+    <!--<field id="42"      value="A 0000000000000" />-->
+    <!--<field id="52"      value="A000000000000000" />-->
+    <!--<field id="63"      value="A 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />-->
+    <!--<field id="64"      value="A000000000000000" />-->
+    <!--<field id="123"     value="A 000000000000000000" />-->
+    <!--<field id="128"     value="A000000000000000" />-->
+
+</isomsg>
