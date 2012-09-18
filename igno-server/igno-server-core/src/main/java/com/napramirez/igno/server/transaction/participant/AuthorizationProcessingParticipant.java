@@ -1,24 +1,72 @@
 package com.napramirez.igno.server.transaction.participant;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.jpos.iso.ISOMsg;
+import org.jpos.transaction.TransactionParticipant;
+import org.jpos.util.Log;
+import org.jpos.util.NameRegistrar;
 
 import com.napramirez.igno.server.common.constants.ResponseCode;
 import com.napramirez.igno.server.common.field.Track2Data;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 public class AuthorizationProcessingParticipant
-    extends StoredProcedureCallingParticipant
+    extends Log
+    implements TransactionParticipant
 {
-    public AuthorizationProcessingParticipant()
+    private static final String CONNECTION_POOL_NAME = "connection.pool.forpost";
+
+    protected Connection conn;
+
+    protected CallableStatement cs;
+
+    private String storedProcedure = "{ CALL pg_authorize(?, ?, ?, ?) }";
+
+    public int prepare( long id, Serializable context )
     {
-        super( "{ CALL pg_authorize(?, ?, ?, ?) }" );
+        try
+        {
+            DataSource ds = (DataSource) NameRegistrar.get( CONNECTION_POOL_NAME );
+            conn = ds.getConnection();
+            cs = conn.prepareCall( storedProcedure, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE );
+        }
+        catch ( Exception e )
+        {
+            return ABORTED;
+        }
+
+        return PREPARED;
     }
 
-    @Override
+    public void abort( long id, Serializable context )
+    {
+        try
+        {
+            if ( conn != null )
+            {
+                conn.close();
+            }
+            if ( cs != null )
+            {
+                cs.close();
+            }
+        }
+        catch ( SQLException e )
+        {
+            // TODO: add elegant logging
+            e.printStackTrace();
+        }
+    }
+
     public void commit( long id, Serializable context )
     {
         long startTime = System.currentTimeMillis();
@@ -56,6 +104,11 @@ public class AuthorizationProcessingParticipant
 
             double newBalance = cs.getDouble( 3 );
             boolean isAuthorized = cs.getBoolean( 4 );
+
+            cs.close();
+            conn.close();
+
+            info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " )" );
 
             ISOMsg response = (ISOMsg) request.clone();
             response.setResponseMTI();
