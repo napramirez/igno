@@ -7,14 +7,9 @@ package com.napramirez.igno.server.common.field;
  */
 public class Track2Data
 {
-    // LLVAR
-    private static int FIELD_LENGTH_INDICATOR_LENGTH = 2;
-
     private static final String FIELD_SEPARATOR_EQUALS = "=";
 
     private static final String FIELD_SEPARATOR_D = "D";
-
-    private int length;
 
     private String pan;
 
@@ -28,25 +23,8 @@ public class Track2Data
 
     public Track2Data( String fieldStringValue )
     {
-        if ( fieldStringValue == null || fieldStringValue.length() < FIELD_LENGTH_INDICATOR_LENGTH )
-        {
-            throw new IllegalArgumentException( "Track 2 Data field is invalid!" );
-        }
-
-        length = Integer.parseInt( fieldStringValue.substring( 0, FIELD_LENGTH_INDICATOR_LENGTH ) );
-
-        String[] fields = fieldStringValue.substring( FIELD_LENGTH_INDICATOR_LENGTH ).split( FIELD_SEPARATOR_EQUALS );
+        String[] fields = fieldStringValue.split( FIELD_SEPARATOR_EQUALS );
         pan = fields[0];
-    }
-
-    public int getLength()
-    {
-        return length;
-    }
-
-    public void setLength( int length )
-    {
-        this.length = length;
     }
 
     public String getPan()
