@@ -10,6 +10,7 @@ import java.sql.Types;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
+import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
@@ -105,11 +106,6 @@ public class AuthorizationProcessingParticipant
             double newBalance = cs.getDouble( 3 );
             boolean isAuthorized = cs.getBoolean( 4 );
 
-            cs.close();
-            conn.close();
-
-            info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " )" );
-
             ISOMsg response = (ISOMsg) request.clone();
             response.setResponseMTI();
 
@@ -117,15 +113,20 @@ public class AuthorizationProcessingParticipant
             response.set( 39, isAuthorized ? ResponseCode.POS.APPROVED.toString() : ResponseCode.POS.DECLINE.toString() );
 
             ctx.put( "response", response );
+
+            long endTime = System.currentTimeMillis();
+            long elapsedTime = endTime - startTime;
+
+            info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " ), "
+                + elapsedTime + "ms" );
         }
-        catch ( Exception e )
+        catch ( ISOException e )
         {
-            error( e );
+            throw new RuntimeException( e );
         }
-
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-
-        System.out.println( "Processing time: " + elapsedTime + "ms" );
+        catch ( SQLException e )
+        {
+            throw new RuntimeException( e );
+        }
     }
 }
