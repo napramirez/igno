@@ -105,9 +105,6 @@ public class AuthorizationProcessingParticipant
             double newBalance = cs.getDouble( 3 );
             boolean isAuthorized = cs.getBoolean( 4 );
 
-            cs.close();
-            conn.close();
-
             info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " )" );
 
             ISOMsg response = (ISOMsg) request.clone();
