@@ -9,8 +9,8 @@ import org.jpos.core.ConfigurationException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 
-import com.napramirez.igno.server.common.ValidateRequest;
-import com.napramirez.igno.server.common.ValidateRequestHelper;
+import com.napramirez.igno.server.common.validate.RequestFormat;
+import com.napramirez.igno.server.common.validate.RequestValidator;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
@@ -67,28 +67,6 @@ public class FieldValidatingParticipant
             }
         }
         
-        // prepares the rest of the fields
-        String propCondtionalFields = cfg.get( "conditionalFields" );
-        String[] conditionalFieldStrings = propCondtionalFields.trim().split( ", " );
-        conditionalFields = new int[conditionalFieldStrings.length];
-        for ( int i = 0; i < conditionalFieldStrings.length; i++ )
-        {
-            try
-            {
-                int fieldValue = Integer.parseInt( conditionalFieldStrings[i].trim() );
-                
-                if ( fieldValue < 0 )
-                {
-                    return ABORTED;
-                }
-                conditionalFields[i] = fieldValue;
-            }
-            catch ( NumberFormatException e )
-            {
-                return ABORTED;
-            }
-        }
-
         return PREPARED;
     }
 
@@ -104,14 +82,29 @@ public class FieldValidatingParticipant
 
                 if ( StringUtils.isEmpty( message ) )
                 {
-                    throw new Exception( ValidateRequest.ErrorMsg.MISSING_FIELD );
+                    throw new Exception( RequestFormat.ErrorMsg.MISSING_FIELD );
                 }
             }
+            // prepares the rest of the fields
+            String propCondtionalFields = cfg.get( "conditionalFields" );
+            String[] conditionalFieldStrings = propCondtionalFields.trim().split( ", " );
+            conditionalFields = new int[conditionalFieldStrings.length];
+            for ( int i = 0; i < conditionalFieldStrings.length; i++ )
+            {
+                int fieldValue = Integer.parseInt( conditionalFieldStrings[i].trim() );
+                    
+                if ( isoMsg.getString( fieldValue ) != null )
+                {
+                    conditionalFields[i] = fieldValue;
+                }
+            }
+
             int[] fields = new int[requiredFields.length + conditionalFields.length];
             System.arraycopy( requiredFields, 0, fields, 0, requiredFields.length );
             System.arraycopy( conditionalFields, 0, fields, requiredFields.length, conditionalFields.length );
+            String pi = ( String ) ctx.get( "pi" );
             
-            ValidateRequestHelper.fieldValidation( fields, isoMsg );
+            RequestValidator.validator( pi, fields, isoMsg);
         }
         catch ( Exception e )
         {
