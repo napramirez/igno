@@ -1,5 +1,7 @@
 <isomsg>
 
+    <header>49534F303036303030303030</header>           <!-- Network Management Header: ISO006000000 -->
+    
     <!--  Mandatory  -->
     <field id="0"       value="0800" />
     <field id="7"       value="0913100000" />           <!-- Dummy date, Sept 13, 10:00, but supposed to come from acquirer -->
