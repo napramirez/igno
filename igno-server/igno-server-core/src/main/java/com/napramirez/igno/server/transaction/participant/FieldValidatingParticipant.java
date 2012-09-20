@@ -1,6 +1,8 @@
 package com.napramirez.igno.server.transaction.participant;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.jpos.core.Configurable;
@@ -24,7 +26,6 @@ public class FieldValidatingParticipant
     private Configuration cfg;
 
     private int[] requiredFields;
-    private int[] conditionalFields;
 
     public void setConfiguration( Configuration cfg )
         throws ConfigurationException
@@ -88,20 +89,22 @@ public class FieldValidatingParticipant
             // prepares the rest of the fields
             String propCondtionalFields = cfg.get( "conditionalFields" );
             String[] conditionalFieldStrings = propCondtionalFields.trim().split( ", " );
-            conditionalFields = new int[conditionalFieldStrings.length];
+            List<Integer> cList = new ArrayList<Integer>();
             for ( int i = 0; i < conditionalFieldStrings.length; i++ )
             {
                 int fieldValue = Integer.parseInt( conditionalFieldStrings[i].trim() );
                     
                 if ( isoMsg.getString( fieldValue ) != null )
                 {
-                    conditionalFields[i] = fieldValue;
+                    cList.add(fieldValue);
                 }
             }
-
-            int[] fields = new int[requiredFields.length + conditionalFields.length];
+            int[] fields = new int[requiredFields.length + cList.size()];
             System.arraycopy( requiredFields, 0, fields, 0, requiredFields.length );
-            System.arraycopy( conditionalFields, 0, fields, requiredFields.length, conditionalFields.length );
+            for ( int index = requiredFields.length, i = 0; i < cList.size(); index++, i++ )
+            {
+                fields[index] = cList.get(i); 
+            }
             String pi = ( String ) ctx.get( "pi" );
             
             RequestValidator.validator( pi, fields, isoMsg);
@@ -115,5 +118,4 @@ public class FieldValidatingParticipant
     public void abort( long id, Serializable context )
     {
     }
-    
 }
