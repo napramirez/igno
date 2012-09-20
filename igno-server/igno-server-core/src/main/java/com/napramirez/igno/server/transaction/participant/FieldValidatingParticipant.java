@@ -10,6 +10,7 @@ import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
+import org.jpos.util.Log;
 
 import com.napramirez.igno.server.common.validate.RequestFormat;
 import com.napramirez.igno.server.common.validate.RequestValidator;
@@ -21,6 +22,7 @@ import com.napramirez.igno.server.transaction.TransactionContext;
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class FieldValidatingParticipant
+    extends Log
     implements TransactionParticipant, Configurable
 {
     private Configuration cfg;
@@ -111,7 +113,7 @@ public class FieldValidatingParticipant
         }
         catch ( Exception e )
         {
-            e.printStackTrace();
+            error( e );
         }
     }
 
