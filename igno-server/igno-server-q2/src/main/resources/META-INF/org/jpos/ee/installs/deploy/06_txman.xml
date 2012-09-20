@@ -36,10 +36,10 @@
     
     <!-- Network Management route -->
     <group name="NetworkManagement">
-        <!--<participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="7, 11, 70" />
             <property name="conditionalFields" value="1, 53, 64, 120, 123, 128" />
-        </participant>-->
+        </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.NetworkManagementProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
