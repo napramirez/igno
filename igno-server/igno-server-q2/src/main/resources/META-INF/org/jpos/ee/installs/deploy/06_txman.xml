@@ -117,9 +117,10 @@
     <!-- From Host Maintenance -->
     <group name="FileUpdate">
         <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
-            <property name="requiredFields" value="2, 7, 11, 39, 91, 101, 120" />
+            <property name="requiredFields" value="2, 7, 11, 48, 49, 60, 91, 101, 120" />
             <property name="conditionalFields" value="121, 122, 126, 127" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FHMProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
