@@ -9,7 +9,7 @@ package com.napramirez.igno.server.common.field;
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class AdditionalData
+public class POSAdditionalData
 {
     private static final int FIELD_LENGTH = 600;
 
@@ -19,7 +19,7 @@ public class AdditionalData
     
     private String tokenHeadersAndTokenData;
     
-    public AdditionalData( String fieldStringValue )
+    public POSAdditionalData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
