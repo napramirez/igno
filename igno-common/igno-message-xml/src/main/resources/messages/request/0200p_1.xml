@@ -3,48 +3,50 @@
     <header>49534F303236303030303030</header>           <!-- POS Header: ISO026000000 -->
 
     <!--  Mandatory  -->
-    <field id="0"       value="0200" />
-    <field id="3"       value="000000" />
-    <field id="4"       value="000000000000" />
-    <field id="7"       value="0000000000" />
-    <field id="11"      value="000000" />
-    <field id="12"      value="0000" />
-    <field id="13"      value="0000" />
-    <field id="17"      value="0000" />
-    <field id="18"      value="0000" />
-    <field id="32"      value="00000000000" />
-    <field id="35"      value="A000000000000000000000000000000000000" />
-    <field id="37"      value="A00000000000" />
-    <field id="41"      value="A 00000000000000" />
-    <field id="43"      value="A 00000000000000000000000000000000000000" />
-    <field id="48"      value="A 0000000000000000000000000000" />
-    <field id="49"      value="000" />
-    <field id="60"      value="A00000000000000" />
-    <field id="61"      value="A 00000000000000" />
-    <field id="100"     value="00000000000" />
-    <field id="120"     value="A 000000000000000000000000000000" />
-    <field id="121"     value="A 000000000000000000000" />
-    <field id="124"     value="A 0000000000" />
+    <field id="0"       value="0200" />                 <!-- Message Type Indicator (MTI) -->
+    <field id="3"       value="000000" />               <!-- Processing Code -->
+    <field id="4"       value="000000000000" />         <!-- Transaction Amount -->
+    <field id="7"       value="0000000000" />           <!-- Transmission Date and Time -->
+    <field id="11"      value="000000" />               <!-- Systems Trace Audit Number -->
+    <field id="12"      value="000000" />               <!-- Local Transaction Time -->
+    <field id="13"      value="0000" />                 <!-- Local Transaction Date -->
+    <field id="17"      value="0000" />                 <!-- Capture Date -->
+    <field id="18"      value="0000" />                 <!-- Merchant Type -->
+    <field id="32"      value="00000000000" />          <!-- Acquiring Institution Identification Code -->
+    <field id="35"      value="A 00000000000000000000000000000000000" />        <!-- Track2 Data -->
+    <field id="37"      value="A00000000000" />                                 <!-- Retreival Reference Number -->
+    <field id="41"      value="A 00000000000001" />                             <!-- Card Acceptor Terminal Identification -->
+    <field id="43"      value="A 00000000000000000000000000000000000000" />     <!-- Card Acceptor Name/Location -->
+    <field id="48"      value="A 0000000000000000000000000000" />               <!-- Retailer Data (POS) -->
+    <field id="49"      value="000" />                                          <!-- Transaction Currency Code -->
+    <field id="60"      value="0160000000000000000" />                          <!-- Terminal Data -->
+    <field id="61"      value="0190000000000000000000" />                       <!-- Card Issuer-Category-Response Code Data (POS) -->
+    <field id="100"     value="00000000000" />                                  <!-- Receiving Institution Identification Code -->
+    <field id="120"     value="02900000000000000000000000000000" />             <!-- Terminal Name/Address-Branch (POS) -->
+    <field id="121"     value="02000000000000000000000" />                      <!-- Authorization Indicators -->
+    <field id="124"     value="009000000000" />                                 <!-- Batch and Shift Data -->
 
     <!-- Conditional -->
-    <!--<field id="2"       value="0000000000000000000" />-->
-    <!--<field id="14"      value="0000" />-->
-    <!--<field id="15"      value="0000" />-->
-    <!--<field id="22"      value="000" />-->
-    <!--<field id="25"      value="00" />-->
-    <!--<field id="27"      value="0" />-->
-    <!--<field id="42"      value="A 0000000000000" />-->
-    <!--<field id="44"      value="A 00" />-->
+    <!--<field id="2"       value="0000000000000000000" />-->                   <!-- Primary Account Number (PAN) -->
+    <!--<field id="14"      value="0000" />-->                                  <!-- Expiration Date -->
+    <!--<field id="15"      value="0000" />-->                                  <!-- Settlement Date -->
+    <!--<field id="22"      value="000" />-->                                   <!-- Point of Service Entry Mode -->
+    <!--<field id="25"      value="00" />-->                                    <!-- Point of Service Condition Code -->
+    <!--<field id="27"      value="0" />-->                                     <!-- Authorization Identification Response Length -->
+    <!--<field id="42"      value="A 0000000000000" />-->                       <!-- Card Acceptor Identification Code -->
+    <!--<field id="44"      value="02 0" />-->                                  <!-- Additional Response Data (POS), LLVAR, FLI: 02, 3: , 4: 0 -->
+                                                                                <!-- Track1 Data -->
     <!--<field id="45"      value="A 00000000000000000000000000000000000000000000000000000000000000000000000000" />-->
-    <!--<field id="52"      value="A 00000000000000" />-->
-    <!--<field id="54"      value="A 0000000000000" />-->
+    <!--<field id="52"      value="A000000000000000" />-->                      <!-- Personal Identification Number (PIN) Data -->
+    <!--<field id="54"      value="012000000000100" />-->                       <!-- Additional Amounts, LLVAR, FLI: 012, Cashback Amount: 1.00 -->
+                                                                                <!-- Additional Data (POS) -->
     <!--<field id="63"      value="A 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />-->
-    <!--<field id="64"      value="A000000000000000" />-->
-    <!--<field id="90"      value="000000000000000000000000000000000000000000" />-->
-    <!--<field id="102"     value="A00000000000000000000000000000" />-->
-    <!--<field id="123"     value="A 000000000000000000000" />-->
-    <!--<field id="125"     value="A 0000000000000" />-->
-    <!--<field id="126"     value="A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />-->
-    <!--<field id="128"     value="A000000000000000" />-->
+    <!--<field id="64"      value="A000000000000000" />-->                      <!-- Primary Message Authentication Code -->
+    <!--<field id="90"      value="000000000000000000000000000000000000000000" />-->    <!-- Original Data Elements -->
+    <!--<field id="102"     value="A00000000000000000000000000000" />-->        <!-- Account Identification 1 -->
+    <!--<field id="123"     value="02000000000000000000000" />-->               <!-- Invoice Data (POS) -->
+    <!--<field id="125"     value="012000000000000" />-->                       <!-- Settlement Print Data (POS) -->
+    <!--<field id="126"     value="03800000000000000000000000000000000000000" />-->     <!-- Preauthorization and Chargeback Data (POS) -->
+    <!--<field id="128"     value="A000000000000000" />-->                      <!-- Secondary Message Authentication Code -->
 
 </isomsg>
