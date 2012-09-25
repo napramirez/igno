@@ -9,6 +9,28 @@ package com.napramirez.igno.server.common.field;
  */
 public class PreauthorizationAndChargebackData
 {
+    /**
+     * PreauthorizationHoldInterval - Position 4
+     */
+    public enum PreauthorizationHoldInterval
+    {
+        MINUTES( "0" ),
+        HOURS( "1" ),
+        DAYS( "2" );
+
+        private String code;
+
+        PreauthorizationHoldInterval( String code )
+        {
+            this.code = code;
+        }
+
+        public String toString()
+        {
+            return code;
+        }
+    }
+
     private static final int FIELD_LENGTH = 41;
 
     private String fieldLengthIndicator;
