@@ -5,7 +5,7 @@ package com.napramirez.igno.server.common.field;
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class AccountIdentification1
+public class AccountIdentification
 {
     private static final int FIELD_LENGTH = 30;
 
@@ -13,7 +13,7 @@ public class AccountIdentification1
 
     private String accountNumber;
 
-    public AccountIdentification1( String fieldStringValue )
+    public AccountIdentification( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
