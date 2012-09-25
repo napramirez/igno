@@ -1,5 +1,7 @@
 <isomsg>
 
+    <header>49534F303236303030303030</header>           <!-- POS Header: ISO026000000 -->
+
     <!--  Mandatory  -->
     <field id="0"       value="0200" />
     <field id="3"       value="000000" />
