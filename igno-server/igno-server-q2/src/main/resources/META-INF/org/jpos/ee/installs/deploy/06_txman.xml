@@ -94,6 +94,7 @@
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124" />
             <property name="conditionalFields" vaue="2, 14, 15, 22, 25, 27, 42, 44, 45, 52, 54, 63, 64, 90, 102, 123, 125, 126, 128" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.POSFinancialTransactionProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
