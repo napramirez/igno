@@ -1,13 +1,13 @@
 package com.napramirez.igno.server.message.field.atm;
 
 /**
- * AdditionalData - Field 048 in FIS ISO Specifications
+ * AdditionalSharingData - Field 048 in FIS ISO Specifications
  *
  * ATM
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class AdditionalData
+public class AdditionalSharingData
 {
     public enum TerminalTransactionAllowedCode
     {
@@ -46,7 +46,7 @@ public class AdditionalData
 
     private String terminalRoutingGroup;
 
-    public AdditionalData( String fieldStringValue )
+    public AdditionalSharingData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
