@@ -56,4 +56,41 @@ public final class POSEntryMode
             return code;
         }
     }
+
+    private static final int FIELD_LENGTH = 3;
+
+    private String panEntryMode;
+
+    private String pinEntryMode;
+
+    public POSEntryMode( String fieldStringValue )
+    {
+        if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
+        {
+            throw new IllegalArgumentException( "POS Entry Mode field is invalid!" );
+        }
+
+        panEntryMode = fieldStringValue.substring( 0, 2 );
+        pinEntryMode = fieldStringValue.substring( 2 );
+    }
+
+    public String getPanEntryMode()
+    {
+        return panEntryMode;
+    }
+
+    public void setPanEntryMode( String panEntryMode )
+    {
+        this.panEntryMode = panEntryMode;
+    }
+
+    public String getPinEntryMode()
+    {
+        return pinEntryMode;
+    }
+
+    public void setPinEntryMode( String pinEntryMode )
+    {
+        this.pinEntryMode = pinEntryMode;
+    }
 }
