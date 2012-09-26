@@ -7,7 +7,7 @@ package com.napramirez.igno.server.message.field.pos;
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class POSSettlementPrintData
+public class SettlementPrintData
 {
     private static final int FIELD_LENGTH = 15;
 
@@ -23,7 +23,7 @@ public class POSSettlementPrintData
 
     private String settlementFlag;
 
-    public POSSettlementPrintData( String fieldStringValue )
+    public SettlementPrintData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
