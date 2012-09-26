@@ -10,6 +10,7 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.GroupSelector;
 import org.jpos.transaction.TransactionParticipant;
 
+import com.napramirez.igno.server.common.constants.ProductIndicator;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
@@ -77,7 +78,6 @@ public class MessageSwitchParticipant
         ISOMsg request = (ISOMsg) ctx.get( "request" );
 
         byte[] pi = getProductIndicator( request.getHeader() );
-        String piMessage = null;
         StringBuffer group = new StringBuffer();
         try
         {
@@ -90,27 +90,27 @@ public class MessageSwitchParticipant
                     case BYTE_ZERO:
                     {
                         group.append( MTI_NETWORK_MANAGEMENT.equals( mti ) ? mti : GROUP_UNHANDLED );
-                        piMessage = "00";
+                        ctx.put( ProductIndicator.KEY, ProductIndicator.NETWORK_MANAGEMENT_MESSAGE );
                         break;
                     }
                     case BYTE_ONE:
                     {
                         group.append( mti );
                         group.append( GROUP_ATM_SUFFIX );
-                        piMessage = "01";
+                        ctx.put( ProductIndicator.KEY, ProductIndicator.ATM_MESSAGE );
                         break;
                     }
                     case BYTE_TWO:
                     {
                         group.append( mti );
                         group.append( GROUP_POS_SUFFIX );
-                        piMessage = "02";
+                        ctx.put( ProductIndicator.KEY, ProductIndicator.POS_MESSAGE );
                         break;
                     }
                     case BYTE_EIGHT:
                     {
                         group.append( MTI_FROM_HOST_MAINTENANCE.equals( mti ) ? mti : GROUP_UNHANDLED );
-                        piMessage = "08";
+                        ctx.put( ProductIndicator.KEY, ProductIndicator.FROM_HOST_MAINTENANCE_MESSAGE );
                         break;
                     }
                     default:
@@ -125,7 +125,6 @@ public class MessageSwitchParticipant
         {
             group.append( GROUP_UNHANDLED );
         }
-        ctx.put( "pi", piMessage );
         return cfg.get( group.toString(), GROUP_UNHANDLED );
     }
 

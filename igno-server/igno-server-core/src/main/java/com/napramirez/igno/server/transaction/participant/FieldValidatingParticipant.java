@@ -12,6 +12,7 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 
+import com.napramirez.igno.server.common.constants.ProductIndicator;
 import com.napramirez.igno.server.common.validate.RequestFormat;
 import com.napramirez.igno.server.common.validate.RequestValidator;
 import com.napramirez.igno.server.transaction.TransactionContext;
@@ -107,9 +108,7 @@ public class FieldValidatingParticipant
             {
                 fields[index] = cList.get(i); 
             }
-            String pi = ( String ) ctx.get( "pi" );
-            
-            RequestValidator.validator( pi, fields, isoMsg);
+            RequestValidator.validator( (String) ctx.get( ProductIndicator.KEY ), fields, isoMsg);
         }
         catch ( Exception e )
         {
