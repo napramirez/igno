@@ -3,8 +3,6 @@ package com.napramirez.igno.server.message.field;
 /**
  * AdditionalAmounts - Field 054 in FIS ISO Specifications
  *
- * POS
- *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class AdditionalAmounts

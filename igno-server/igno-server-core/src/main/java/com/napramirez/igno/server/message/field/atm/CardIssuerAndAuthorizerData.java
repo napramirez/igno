@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
  * CardIssuerAndAuthorizerData - Field 061 in FIS ISO Specifications

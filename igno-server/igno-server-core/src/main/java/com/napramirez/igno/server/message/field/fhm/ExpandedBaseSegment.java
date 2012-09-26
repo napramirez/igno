@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.fhm;
 
 /**
  * ExpandedBaseSegment - Field 120 in FIS ISO Specifications

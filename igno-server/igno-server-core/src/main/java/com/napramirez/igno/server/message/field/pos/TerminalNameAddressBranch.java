@@ -1,13 +1,13 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
  * POSTerminalName - Field 120 in FIS ISO Specifications
  * 
- * Terminal Name/Address-Branch (POS)
+ * POS
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class POSTerminalName
+public class TerminalNameAddressBranch
 {
     private static final int FIELD_LENGTH = 32;
 
@@ -17,11 +17,11 @@ public class POSTerminalName
 
     private String terminalBranchId;
 
-    public POSTerminalName( String fieldStringValue )
+    public TerminalNameAddressBranch( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
-            throw new IllegalArgumentException( "Terminal Name (POS) field is invalid!" );
+            throw new IllegalArgumentException( "Terminal Name/Address-Branch (POS) field is invalid!" );
         }
 
         fieldLengthIndicator = fieldStringValue.substring( 0, 3 );

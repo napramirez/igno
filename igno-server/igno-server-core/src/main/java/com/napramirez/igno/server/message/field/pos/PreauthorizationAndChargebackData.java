@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
  * PreauthorizationAndChargebackData - Field 126 in FIS ISO Specifications

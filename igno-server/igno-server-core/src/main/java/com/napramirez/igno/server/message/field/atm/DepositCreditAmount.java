@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
  * DepositCreditAmount - Field 123 in FIS ISO Specifications

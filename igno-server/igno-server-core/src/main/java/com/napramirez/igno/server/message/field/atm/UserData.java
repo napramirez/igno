@@ -1,7 +1,7 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
- * ATMUserData - Field 127 in FIS ISO Specifications
+ * UserData - Field 127 in FIS ISO Specifications
  *
  * ATM
  *
@@ -9,7 +9,7 @@ package com.napramirez.igno.server.message.field;
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class ATMUserData
+public class UserData
 {
     private static final int FIELD_LENGTH = 200;
 
@@ -17,7 +17,7 @@ public class ATMUserData
 
     private String content;
 
-    public ATMUserData( String fieldStringValue )
+    public UserData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

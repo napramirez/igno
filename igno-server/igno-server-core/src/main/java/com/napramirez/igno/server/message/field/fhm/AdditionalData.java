@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.fhm;
 
 /**
  * FHM Additional Data - Field 48 in FIS ISO Specification
@@ -6,13 +6,13 @@ package com.napramirez.igno.server.message.field;
  * @author ztorres
  *
  */
-public class FHMAdditionalData
+public class AdditionalData
 {
     private static final int FIELD_LENGTH = 79;
     private String memberNumber;         // 4-6
     private String cardFIID;             // 7-10
     
-    public FHMAdditionalData( String fieldStringValue )
+    public AdditionalData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

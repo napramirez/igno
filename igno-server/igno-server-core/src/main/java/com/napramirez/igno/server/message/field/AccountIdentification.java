@@ -1,7 +1,7 @@
 package com.napramirez.igno.server.message.field;
 
 /**
- * AccountIdentification1 - Field 102 in FIS ISO Specifications
+ * AccountIdentification - Field 102, 103 in FIS ISO Specifications
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
@@ -17,7 +17,7 @@ public class AccountIdentification
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
-            throw new IllegalArgumentException( "Additional Data field is invalid!" );
+            throw new IllegalArgumentException( "Account Identification field is invalid!" );
         }
 
         fieldLengthIndicator = fieldStringValue.substring( 0, 3 );

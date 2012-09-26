@@ -1,8 +1,10 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
  * AccountIndicator - Field 125 in FIS ISO Specifications
- * 
+ *
+ * ATM
+ *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class AccountIndicator

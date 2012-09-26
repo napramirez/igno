@@ -1,7 +1,7 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.fhm;
 
 /**
- * FHM Datat - Field 60 in FIS ISO Specification
+ * FHMData - Field 60 in FIS ISO Specification
  * 
  * @author ztorres
  *

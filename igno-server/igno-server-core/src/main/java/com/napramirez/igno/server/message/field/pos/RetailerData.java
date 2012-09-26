@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
  * POS Retailer Data - Field 48 in FIS ISO Specification
@@ -6,14 +6,14 @@ package com.napramirez.igno.server.message.field;
  * @author ztorres
  *
  */
-public class POSRetailerData
+public class RetailerData
 {
     private static final int FIELD_LENGTH = 30;
     private String retailerID;     // 4-22
     private String retailerGroup;  // 23-26
     private String retailerRegion; // 27-30
     
-    public POSRetailerData( String fieldStringValue )
+    public RetailerData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

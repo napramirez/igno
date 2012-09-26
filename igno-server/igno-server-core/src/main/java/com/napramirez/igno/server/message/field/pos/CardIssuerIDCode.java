@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
  * CardIssuerIDCode - Field 122 in FIS ISO Specifications

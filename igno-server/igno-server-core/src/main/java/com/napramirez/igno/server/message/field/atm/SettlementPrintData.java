@@ -1,13 +1,13 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
- * ATMSettlementPrintData - Field 125 in FIS ISO Specifications
+ * SettlementPrintData - Field 125 in FIS ISO Specifications
  *
  * ATM
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class ATMSettlementPrintData
+public class SettlementPrintData
 {
     private static final int FIELD_LENGTH = 375;
 
@@ -23,7 +23,7 @@ public class ATMSettlementPrintData
     
     private String statementData;
     
-    public ATMSettlementPrintData( String fieldStringValue )
+    public SettlementPrintData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

@@ -1,12 +1,14 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
- * POS Issuer-Category-Response Code Data - Field 61 in FIS ISO Specification
+ * Issuer-Category-Response Code Data - Field 61 in FIS ISO Specification
+ * 
+ * POS
  * 
  * @author ztorres
  *
  */
-public class POSIssuerCategoryResponseCodeData
+public class IssuerCategoryResponseCodeData
 {
     private static final int FIELD_LENGTH = 22;
     private String cardIssuerFIID;         // 4-7
@@ -15,11 +17,11 @@ public class POSIssuerCategoryResponseCodeData
     private String accountIndicator;       // 13-14
     private String interchageResponseCode; // 15-22
     
-    public POSIssuerCategoryResponseCodeData( String fieldStringValue )
+    public IssuerCategoryResponseCodeData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
-            throw new IllegalArgumentException( "POS Issuer-Category-Respose Code Data is invalid" );
+            throw new IllegalArgumentException( "Issuer-Category-Respose Code Data (POS) is invalid" );
         }
         
         cardIssuerFIID = fieldStringValue.substring( 3, 7 );

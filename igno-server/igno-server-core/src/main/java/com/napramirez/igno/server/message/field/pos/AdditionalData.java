@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
  * AdditionalData - Field 063 in FIS ISO Specifications
@@ -9,7 +9,7 @@ package com.napramirez.igno.server.message.field;
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class POSAdditionalData
+public class AdditionalData
 {
     private static final int FIELD_LENGTH = 600;
 
@@ -19,7 +19,7 @@ public class POSAdditionalData
     
     private String tokenHeadersAndTokenData;
     
-    public POSAdditionalData( String fieldStringValue )
+    public AdditionalData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

@@ -1,12 +1,14 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.pos;
 
 /**
- * POS Terminal Data - Field 60 in FIS ISO Speicification
+ * Terminal Data - Field 60 in FIS ISO Speicification
+ * 
+ * POS
  * 
  * @author ztorres
  *
  */
-public class POSTerminalData
+public class TerminalData
 {
     private static final int FIELD_LENGTH = 19;
     private String terminalOwnerFIID;       // 4-7
@@ -14,7 +16,7 @@ public class POSTerminalData
     private String terminalOwnerTimeOffset; // 12-15 ( minutes )
     private String pseudoTerminalID;        // 16-19
     
-    public POSTerminalData( String fieldStringValue )
+    public TerminalData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() !=  FIELD_LENGTH )
         {

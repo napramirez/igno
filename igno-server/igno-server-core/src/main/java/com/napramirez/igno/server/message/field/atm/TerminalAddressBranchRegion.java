@@ -1,13 +1,13 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
- * ATMTerminalName - Field 120 in FIS ISO Specifications
+ * TerminalAddressBranchRegion - Field 120 in FIS ISO Specifications
  *
- * Terminal Address-Branch-Region (ATM)
+ * ATM
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class ATMTerminalName
+public class TerminalAddressBranchRegion
 {
     private static final int FIELD_LENGTH = 36;
 
@@ -19,11 +19,11 @@ public class ATMTerminalName
 
     private String terminalRegion;
 
-    public ATMTerminalName( String fieldStringValue )
+    public TerminalAddressBranchRegion( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
-            throw new IllegalArgumentException( "Terminal Name (ATM) field is invalid!" );
+            throw new IllegalArgumentException( "Terminal Address-Branch-Region (ATM) field is invalid!" );
         }
 
         fieldLengthIndicator = fieldStringValue.substring( 0, 3 );

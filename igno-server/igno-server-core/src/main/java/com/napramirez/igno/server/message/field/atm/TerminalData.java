@@ -1,13 +1,13 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.atm;
 
 /**
- * ATMTerminalData - Field 060 in FIS ISO Specifications
+ * TerminalData - Field 060 in FIS ISO Specifications
  *
  * ATM
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class ATMTerminalData
+public class TerminalData
 {
     private static final int FIELD_LENGTH = 15;
 
@@ -19,7 +19,7 @@ public class ATMTerminalData
 
     private String terminalOwnerTimeOffset;
 
-    public ATMTerminalData( String fieldStringValue )
+    public TerminalData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {

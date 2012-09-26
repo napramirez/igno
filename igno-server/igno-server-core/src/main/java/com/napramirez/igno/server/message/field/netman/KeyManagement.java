@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field;
+package com.napramirez.igno.server.message.field.netman;
 
 /**
  * KeyManagement - Field 120 in FIS ISO Specifications
