@@ -10,7 +10,7 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.GroupSelector;
 import org.jpos.transaction.TransactionParticipant;
 
-import com.napramirez.igno.server.common.constants.ProductIndicator;
+import com.napramirez.igno.server.message.field.constants.ProductIndicator;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**

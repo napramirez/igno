@@ -6,8 +6,8 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 
-import com.napramirez.igno.server.common.constants.NetworkManagementInformationCode;
-import com.napramirez.igno.server.common.constants.ResponseCode;
+import com.napramirez.igno.server.message.field.constants.NetworkManagementInformationCode;
+import com.napramirez.igno.server.message.field.constants.ResponseCode;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
