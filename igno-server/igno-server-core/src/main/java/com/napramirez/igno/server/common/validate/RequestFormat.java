@@ -15,7 +15,7 @@ public class RequestFormat
 	    
     public static interface RegEx
     {
-	    String ALPHA_NUMERIC_SPECIAL = "^[a-zA-Z0-9!@#$%^&*()_ ]*$";
+	    String ALPHA_NUMERIC_SPECIAL = "^[a-zA-Z0-9!@#$%^&*()_ =]*$";
 	    String CREDIT_DEBIT_AMOUNT = "^(C|D)\\d{8}$"; // used for X+N8 attribute
 	    String ALPHABETIC_NUMERIC = "^[a-zA-z0-9 ]*$";
 	    String NUMERIC = "^[\\d]*$";
