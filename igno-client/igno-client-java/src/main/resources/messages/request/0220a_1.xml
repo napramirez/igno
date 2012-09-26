@@ -1,0 +1,46 @@
+<isomsg>
+
+    <header>49534F303136303030303030</header>                                    <!-- ATM Financial Transaction Advice Header: ISO016000000 -->
+    
+    <!--  Mandatory  -->
+    <field id="0"       value="0220" />                                          <!-- MTI -->
+    <field id="3"       value="212010" />                                        <!-- Processing Code -->
+    <field id="4"       value="999999999999" />                                  <!-- Transaction Amount -->
+    <field id="7"       value="0925111400" />                                    <!-- Transmission Date and Time -->
+    <field id="11"      value="123456" />                                        <!-- System Trace Audit Number -->
+    <field id="12"      value="111400" />                                        <!-- Local Transaction Time -->   
+    <field id="13"      value="0925" />                                          <!-- Local Transaction Date -->   
+    <field id="17"      value="0925" />                                          <!-- Capture Date -->
+    <field id="32"      value="00000000000" />                                   <!-- Acquiring Institution Identification Code -->
+    <field id="35"      value="1234567890123456789D0131709002IDKWTDH" />         <!-- Track 2 Data -->
+    <field id="37"      value="123456789012" />                                  <!-- Retrieval Reference Number -->
+    <field id="38"      value="A00000" />                                        <!-- Authorization Identification Response -->
+    <field id="39"      value="00" />                                            <!-- Response Code -->
+    <field id="41"      value="A 00000000000001" />                              <!-- Card Acceptor Terminal Identification --> 
+    <field id="43"      value="A 00000000000000000000000000000000000000" />      <!-- Card Acceptor Name/Location -->
+    <field id="49"      value="840" />                                           <!-- Currency -->
+    <field id="60"      value="012 00000000000" />                               <!-- ATM Terminal Data -->
+    <field id="61"      value="013 000000000000" />                              <!-- ATM Card Issuer and Authorization Data -->
+    <field id="100"     value="00000000000" />                                   <!-- Receiving Institution Identification Code -->
+    <field id="120"     value="033 00000000000000000000000000000000" />          <!-- ATM Terminal Address-Branch-Region -->
+
+    <!-- Conditional -->
+    <!--<field id="2"       value="0000000000000000000" />-->
+    <!--<field id="15"      value="0000" />-->
+    <!--<field id="28"      value="D00000000" />-->
+    <!--<field id="42"      value="A 0000000000000" />-->
+    <!--<field id="54"      value="A00000000000000" />-->
+    <!--<field id="63"      value="A000000000000000000" />-->
+    <!--<field id="64"      value="A000000000000000" />-->
+    <!--<field id="90"      value="000000000000000000000000000000000000000000" />-->
+    <!--<field id="102"     value="A00000000000000000000000000000" />-->
+    <!--<field id="103"     value="A00000000000000000000000000000" />-->
+    <!--<field id="122"     value="A0000000000000" />-->
+    <!--<field id="123"     value="000000000000000" />-->
+    <!--<field id="124"     value="0000" />-->
+    <!--<field id="125"     value="A000" />-->
+    <!--<field id="126"     value="A00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />-->
+    <!--<field id="127"     value="A00000000000000000000000000000000000000000000000000000000000" />-->
+    <!--<field id="128"     value="A000000000000000" />-->
+
+</isomsg>
