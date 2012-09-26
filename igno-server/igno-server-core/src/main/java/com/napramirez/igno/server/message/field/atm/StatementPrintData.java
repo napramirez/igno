@@ -1,33 +1,52 @@
 package com.napramirez.igno.server.message.field.atm;
 
 /**
- * SettlementPrintData - Field 125 in FIS ISO Specifications
+ * StatementPrintData - Field 125 in FIS ISO Specifications
  *
- * ATM
+ * ATM - Alternate
  *
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public class SettlementPrintData
+public class StatementPrintData
 {
+    public enum PageIndicator
+    {
+        FILL_ONE_PAGE_ONLY( "1P" ),
+        LAST_PAGE( "LP" ),
+        SUMMARY_PAGE( "SP" );
+
+        private String code;
+
+        private PageIndicator( String code )
+        {
+            this.code = code;
+        }
+
+        public String toString()
+        {
+            return code;
+        }
+    }
+
     private static final int FIELD_LENGTH = 375;
 
     private String fieldLengthIndicator;
-    
+
     private String pageIndicator;
-    
+
     private String lastStatementDate;
-    
+
     private String headerLines;
-    
+
     private String columnLines;
-    
+
     private String statementData;
-    
-    public SettlementPrintData( String fieldStringValue )
+
+    public StatementPrintData( String fieldStringValue )
     {
         if ( fieldStringValue == null || fieldStringValue.length() != FIELD_LENGTH )
         {
-            throw new IllegalArgumentException( "Settlement Print Data (ATM) field is invalid!" );
+            throw new IllegalArgumentException( "Statement Print Data (ATM - Alternate) field is invalid!" );
         }
 
         fieldLengthIndicator = fieldStringValue.substring( 0, 3 );
