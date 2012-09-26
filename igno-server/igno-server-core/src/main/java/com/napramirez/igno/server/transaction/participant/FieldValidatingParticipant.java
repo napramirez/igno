@@ -12,9 +12,9 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 
-import com.napramirez.igno.server.common.constants.ProductIndicator;
-import com.napramirez.igno.server.common.validate.RequestFormat;
-import com.napramirez.igno.server.common.validate.RequestValidator;
+import com.napramirez.igno.server.message.field.constants.ProductIndicator;
+import com.napramirez.igno.server.message.field.validation.RequestFormat;
+import com.napramirez.igno.server.message.field.validation.RequestValidator;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**

@@ -14,7 +14,7 @@ import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 import org.jpos.util.NameRegistrar;
 
-import com.napramirez.igno.server.common.field.Track2Data;
+import com.napramirez.igno.server.message.field.Track2Data;
 import com.napramirez.igno.server.transaction.TransactionContext;
 
 /**
