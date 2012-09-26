@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field.constants;
+package com.napramirez.igno.server.message.field;
 
 /**
  * ProcessingCode - Field 003 in FIS ISO Specifications

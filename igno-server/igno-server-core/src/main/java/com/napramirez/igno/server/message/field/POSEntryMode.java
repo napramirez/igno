@@ -1,4 +1,4 @@
-package com.napramirez.igno.server.message.field.constants;
+package com.napramirez.igno.server.message.field;
 
 /**
  * POSEntryMode - Field 022 in FIS ISO Specifications
