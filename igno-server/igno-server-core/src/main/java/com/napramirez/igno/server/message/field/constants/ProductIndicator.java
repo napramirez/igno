@@ -1,39 +1,45 @@
 package com.napramirez.igno.server.message.field.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ProductIndicator
  * 
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
-public final class ProductIndicator
+public enum ProductIndicator
 {
-    public static String KEY = "product-indicator";
-
-    public static String NETWORK_MANAGEMENT_MESSAGE = "network-management-messages";
-
-    public static String ATM_MESSAGE = "atm-messages";
-
-    public static String POS_MESSAGE = "pos-messages";
-
-    public static String FROM_HOST_MAINTENANCE_MESSAGE = "from-host-maintenance-message";
-
-    public static boolean isNetworkManagementMessage( String productIndicator )
+    KEY( "pi" ),
+    NETWORK_MANAGEMENT_MESSAGE( "n" ),
+    ATM_MESSAGE( "a" ),
+    POS_MESSAGE( "p" ),
+    FROM_HOST_MAINTENANCE_MESSAGE( "f" );
+    
+    private static final Map<String, ProductIndicator> lookup = new HashMap<String, ProductIndicator>();
+    
+    static
     {
-        return NETWORK_MANAGEMENT_MESSAGE.equals( productIndicator );
+        for ( ProductIndicator type : ProductIndicator.values() )
+        {
+            lookup.put( type.getSuffix(), type );
+        }
     }
 
-    public static boolean isATMMessage( String productIndicator )
+    private String suffix;
+
+    ProductIndicator( String suffix )
     {
-        return ATM_MESSAGE.equals( productIndicator );
+        this.suffix = suffix;
     }
 
-    public static boolean isPOSMessage( String productIndicator )
+    public String getSuffix()
     {
-        return POS_MESSAGE.equals( productIndicator );
+        return suffix;
     }
-
-    public static boolean isFHMMessage( String productIndicator )
+    
+    public static ProductIndicator get( String key )
     {
-        return FROM_HOST_MAINTENANCE_MESSAGE.equals( productIndicator );
+        return lookup.get( key );
     }
 }
