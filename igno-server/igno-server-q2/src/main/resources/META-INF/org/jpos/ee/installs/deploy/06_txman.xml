@@ -36,9 +36,12 @@
     
     <!-- Network Management route -->
     <group name="NetworkManagement">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="7, 11, 70" />
-            <property name="conditionalFields" value="1, 53, 64, 120, 123, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.NetworkManagementProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
@@ -47,27 +50,36 @@
 
     <!-- ATM route -->
     <group name="ATMFinancialTransaction">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 41, 43, 49, 60, 120" />
-            <property name="conditionalFields" value="2, 15, 22, 28, 42, 48, 52, 54, 61, 64, 100, 102, 103, 124, 125, 126, 127, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ATMFinancialTransactionProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="ATMFinancialTransactionAdvice">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 49, 60, 61, 100" />
-            <property name="conditionalFields" value="2, 15, 28, 42, 54, 63, 64, 90, 102, 103, 122, 123, 124, 125, 126, 127, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ATMFinancailTransactionAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="ATMReversalAdvice">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 49, 60, 61, 90, 100, 120" />
-            <property name="conditionalFields" value="2, 15, 28, 42, 54, 63, 64, 95, 102, 103, 122, 123, 124, 125, 126, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.ATMReversalAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
@@ -76,45 +88,60 @@
 
     <!-- POS route -->
     <group name="Authorization">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 22, 25, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
-            <property name="conditionalFields" value="2, 14, 15, 27, 42, 52, 63, 64, 123, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="AuthorizationAdvice">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125, 126" />
-            <property name="conditionalFields" value="2, 14, 15, 22, 27, 42, 63, 64, 102, 122, 123, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="POSFinancialTransaction">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 18, 32, 35, 37, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124" />
-            <property name="conditionalFields" vaue="2, 14, 15, 22, 25, 27, 42, 44, 45, 52, 54, 63, 64, 90, 102, 123, 125, 126, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.POSFinancialTransactionProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="POSFinancialTransactionAdvice">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 100, 120, 121, 124, 125" />
-            <property name="conditionalFields" value="2, 15, 18, 22, 25, 27, 42, 44, 45, 54, 63, 64, 90, 95, 102, 122, 123, 126, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.POSFinancialTransactionAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
     <group name="POSReversalAdvice">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="3, 4, 7, 11, 12, 13, 17, 32, 35, 37, 38, 39, 41, 43, 48, 49, 60, 61, 90, 100, 120, 121, 123, 124, 125" />
-            <property name="conditionalFields" value="2, 14, 15, 18, 22, 25, 42, 45, 54, 63, 64, 95, 102, 126, 128" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.POSReversalAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
@@ -123,9 +150,12 @@
     
     <!-- From Host Maintenance -->
     <group name="FileUpdate">
-        <participant class="com.napramirez.igno.server.transaction.participant.FieldValidatingParticipant" logger="Q2">
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldExistenceValidatingParticipant" logger="Q2">
             <property name="requiredFields" value="2, 7, 11, 48, 49, 60, 91, 101, 120" />
-            <property name="conditionalFields" value="121, 122, 126, 127" />
+        </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.FieldSyntaxValidatingParticipant" logger="Q2">
+            <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
+            <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.FHMProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />

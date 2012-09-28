@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,8 +180,11 @@ public class Message0100Sender
             ISOMsg requestClone = (ISOMsg) requestTemplate.clone();
             requestClone.set( 11, ISOUtil.padleft( Integer.toString( messageCount ), 6, '0' ) );
 
-            requestClone.set( 2, account ); // account number
-            requestClone.set( 4, accountsAndAmounts.get( account ) ); // transaction amount
+            requestClone.set( 2, account );
+
+            BigDecimal amount = new BigDecimal( accountsAndAmounts.get( account ) );
+
+            requestClone.set( 4, ISOUtil.zeropad( amount.scaleByPowerOfTen( 2 ).longValue(), 12 ) );
 
             new Thread( new Message0100Sender( requestClone, "" + messageCount ) ).start();
             messageCount++;

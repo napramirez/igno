@@ -293,7 +293,7 @@ public class RequestValidator
         // 0200 atm and 0200 pos
         if ( mti.equals( "0200" ) )
         {
-            if ( ProductIndicator.isATMMessage( pi ) )
+            if ( ProductIndicator.ATM_MESSAGE.equals( ProductIndicator.get( pi ) ) )
             {
                 if ( map0200a.containsKey( fieldKey ) )
                 {
@@ -311,7 +311,7 @@ public class RequestValidator
         // 0220/0221 atm and 0220/0221 pos
         else if ( mti.equals( "0220" ) || mti.equals( "0221" ) )
         {
-            if ( ProductIndicator.isATMMessage( pi ) )
+            if ( ProductIndicator.ATM_MESSAGE.equals( ProductIndicator.get( pi ) ) )
             {
                 if ( map0220a_0221a.containsKey( fieldKey ) )
                 {
@@ -329,7 +329,7 @@ public class RequestValidator
         // 0420/0421 atm and 0420/0421 pos
         else if ( mti.equals( "0420" ) || mti.equals( "0421" ) )
         {
-            if ( ProductIndicator.isATMMessage( pi ) )
+            if ( ProductIndicator.ATM_MESSAGE.equals( ProductIndicator.get( pi ) ) )
             {
                 if ( map0420a_0421a.containsKey( fieldKey ) )
                 {
