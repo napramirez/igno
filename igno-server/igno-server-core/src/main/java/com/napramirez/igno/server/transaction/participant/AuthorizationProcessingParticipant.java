@@ -2,19 +2,14 @@ package com.napramirez.igno.server.transaction.participant;
 
 import java.io.Serializable;
 import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-
-import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
-import org.jpos.util.NameRegistrar;
 
 import com.napramirez.igno.server.message.field.Track2Data;
 import com.napramirez.igno.server.message.field.constants.ResponseCode;
@@ -24,77 +19,21 @@ public class AuthorizationProcessingParticipant
     extends Log
     implements TransactionParticipant
 {
-    private static final String CONNECTION_POOL_NAME = "connection.pool.forpost";
-
-    protected Connection conn;
-
-    protected CallableStatement cs;
-
-    private String storedProcedure = "{ CALL pg_authorize(?, ?, ?, ?) }";
-
     public int prepare( long id, Serializable context )
-    {
-        try
-        {
-            DataSource ds = (DataSource) NameRegistrar.get( CONNECTION_POOL_NAME );
-            conn = ds.getConnection();
-            cs = conn.prepareCall( storedProcedure, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE );
-        }
-        catch ( Exception e )
-        {
-            return ABORTED;
-        }
-
-        return PREPARED;
-    }
-
-    public void abort( long id, Serializable context )
-    {
-        try
-        {
-            if ( conn != null )
-            {
-                conn.close();
-            }
-            if ( cs != null )
-            {
-                cs.close();
-            }
-        }
-        catch ( SQLException e )
-        {
-            // TODO: add elegant logging
-            e.printStackTrace();
-        }
-    }
-
-    public void commit( long id, Serializable context )
     {
         long startTime = System.currentTimeMillis();
 
+        TransactionContext ctx = (TransactionContext) context;
+        ISOMsg request = (ISOMsg) ctx.get( "request" );
+
+        Long pan = getPAN( request );
+        double amount = Double.valueOf( request.getString( 4 ) );
+
+        double newBalance;
+        boolean isAuthorized;
         try
         {
-            TransactionContext ctx = (TransactionContext) context;
-            ISOMsg request = (ISOMsg) ctx.get( "request" );
-
-            Long pan = null;
-
-            String panString = request.getString( 2 );
-            if ( StringUtils.isNotBlank( panString ) )
-            {
-                pan = Long.valueOf( panString );
-            }
-            else
-            {
-                String track2DataString = request.getString( 35 );
-                if ( StringUtils.isNotBlank( track2DataString ) )
-                {
-                    Track2Data track2Data = new Track2Data( track2DataString );
-                    pan = Long.valueOf( track2Data.getPan() );
-                }
-            }
-
-            double amount = Double.valueOf( request.getString( 4 ) );
+            CallableStatement cs = (CallableStatement) ctx.tget( "statement" );
 
             cs.setLong( 1, pan );
             cs.setDouble( 2, amount );
@@ -103,30 +42,65 @@ public class AuthorizationProcessingParticipant
 
             cs.execute();
 
-            double newBalance = cs.getDouble( 3 );
-            boolean isAuthorized = cs.getBoolean( 4 );
+            newBalance = cs.getDouble( 3 );
+            isAuthorized = cs.getBoolean( 4 );
+        }
+        catch ( SQLException e )
+        {
+            error( e );
+            return ABORTED;
+        }
 
-            ISOMsg response = (ISOMsg) request.clone();
+        ISOMsg response = (ISOMsg) request.clone();
+        try
+        {
             response.setResponseMTI();
 
             response.set( 38, "A00000" );
             response.set( 39, isAuthorized ? ResponseCode.POS.APPROVED.toString() : ResponseCode.POS.DECLINE.toString() );
-
-            ctx.put( "response", response );
-
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime - startTime;
-
-            info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " ), "
-                + elapsedTime + "ms" );
         }
         catch ( ISOException e )
         {
-            throw new RuntimeException( e );
+            error( e );
+            return ABORTED;
         }
-        catch ( SQLException e )
+
+        ctx.put( "response", response );
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+
+        info( "pg_authorize( " + pan + ", " + amount + ", " + newBalance + ", " + isAuthorized + " ), " + elapsedTime
+            + "ms" );
+
+        return PREPARED;
+    }
+
+    public void commit( long id, Serializable context )
+    {
+    }
+
+    public void abort( long id, Serializable context )
+    {
+    }
+
+    private long getPAN( ISOMsg message )
+    {
+        String panString = message.getString( 2 );
+        if ( StringUtils.isNotBlank( panString ) )
         {
-            throw new RuntimeException( e );
+            return Long.valueOf( panString );
         }
+        else
+        {
+            String track2DataString = message.getString( 35 );
+            if ( StringUtils.isNotBlank( track2DataString ) )
+            {
+                Track2Data track2Data = new Track2Data( track2DataString );
+                return Long.valueOf( track2Data.getPan() );
+            }
+        }
+
+        return 0;
     }
 }
