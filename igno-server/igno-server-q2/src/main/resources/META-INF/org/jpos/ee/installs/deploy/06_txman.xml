@@ -95,7 +95,11 @@
             <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
             <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
+        <participant class="com.napramirez.igno.server.transaction.participant.DBConnectionOpeningParticipant" logger="Q2">
+            <property name="storedProcedure" value="{ CALL pg_authorize(?, ?, ?, ?) }" />
+        </participant>
         <participant class="com.napramirez.igno.server.transaction.participant.AuthorizationProcessingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.DBConnectionClosingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>
