@@ -12,4 +12,10 @@
     <artifactId>igno-message-xml</artifactId>
     <name>Igno :: Common :: Message :: XML</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.jpos</groupId>
+            <artifactId>jpos</artifactId>
+        </dependency>
+    </dependencies>
 </project>
