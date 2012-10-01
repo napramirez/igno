@@ -51,9 +51,11 @@ public class FieldSyntaxValidator
 
     private boolean isFLIValid( Field field )
     {
-        if ( field.getDefinition().getFliLength() > 0 )
+        int fliLength = field.getDefinition().getFliLength();
+
+        if ( fliLength > 0 )
         {
-            String fieldValue = field.getStringValue().substring( field.getFLI() );
+            String fieldValue = field.getStringValue().substring( fliLength );
 
             return field.getFLI() == fieldValue.length();
         }
