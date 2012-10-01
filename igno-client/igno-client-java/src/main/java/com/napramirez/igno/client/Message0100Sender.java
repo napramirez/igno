@@ -8,114 +8,50 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jpos.iso.BaseChannel;
-import org.jpos.iso.ISOChannel;
-import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
-import org.jpos.iso.ISOPackager;
 import org.jpos.iso.ISOUtil;
-import org.jpos.iso.channel.BASE24TCPChannel;
-import org.jpos.iso.packager.BASE24Packager;
-import org.jpos.iso.packager.XMLPackager;
-import org.jpos.q2.iso.IgnoChannelAdaptor;
-import org.jpos.q2.iso.IgnoQMUX;
-import org.jpos.q2.iso.QMUX;
-import org.jpos.space.LocalSpace;
-import org.jpos.space.SpaceFactory;
+
+import com.napramirez.igno.common.message.MessageHeader;
+import com.napramirez.igno.common.message.MessageTemplate;
 
 public class Message0100Sender
-    implements Runnable
+    extends TemplatedMessageSender
 {
-    private static final String DEFAULT_QUEUE_IN = "receive";
-
-    private static final String DEFAULT_QUEUE_OUT = "send";
-
-    private static final String DEFAULT_QUEUE_UNHANDLED = "unhandled";
-
-    private static final String DEFAULT_HOST = "127.0.0.1";
-
-    private static final int DEFAULT_PORT = 10000;
-
-    private static final long DEFAULT_RECONNECT_DELAY = 10000;
-
-    private static final long DEFAULT_TIMEOUT = 480000;
-
-    private static final String HEADER_MASK = "ISOxx60000yz";
-
-    private LocalSpace<?, ?> space;
-
-    private IgnoChannelAdaptor channelAdaptor;
-
-    private ISOChannel channel;
-
-    private QMUX mux;
-
-    private ISOMsg message;
-
-    public Message0100Sender( ISOMsg message, String id )
+    public Message0100Sender( String id )
         throws Exception
     {
-        this.message = message;
-
-        space = (LocalSpace<?, ?>) SpaceFactory.getSpace( id );
-
-        mux = new IgnoQMUX( space );
-        mux.setInQueue( DEFAULT_QUEUE_OUT );
-        mux.setOutQueue( DEFAULT_QUEUE_IN );
-        mux.setUnhandledQueue( DEFAULT_QUEUE_UNHANDLED );
-        mux.start();
-
-        channel = new BASE24TCPChannel( DEFAULT_HOST, DEFAULT_PORT, new BASE24Packager() );
-        ( (BaseChannel) channel ).setHeader( HEADER_MASK );
-
-        channelAdaptor = new IgnoChannelAdaptor( channel, space );
-        channelAdaptor.setInQueue( DEFAULT_QUEUE_IN );
-        channelAdaptor.setOutQueue( DEFAULT_QUEUE_OUT );
-        channelAdaptor.setReconnectDelay( DEFAULT_RECONNECT_DELAY );
-        channelAdaptor.start();
+        super( id, MessageTemplate.AUTHORIZATION, MessageHeader.POS_MESSAGE );
     }
 
-    public void run()
+    public void beforeSend( ISOMsg request )
     {
-        long startTime = System.currentTimeMillis();
-        System.out.println( "Authorizing " + message.getString( 4 ) + " for account " + message.getString( 2 ) + " ("
-            + startTime + "ms)" );
+        System.out.println( "Sending authorization request '" + getId() + "'..." );
+    }
 
-        try
+    public void afterSend( ISOMsg response )
+    {
+        if ( response != null )
         {
-            ISOMsg response = mux.request( message, DEFAULT_TIMEOUT );
+            StringBuilder sb = new StringBuilder( "Result for request '" + getId() + "' is: " );
 
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime - startTime;
-
-            String result = "TimedOut";
-            if ( response != null )
+            String resultCode = response.getString( 39 );
+            if ( "00".equals( resultCode ) )
             {
-                if ( "00".equals( response.getString( 39 ) ) )
-                {
-                    result = "Approved";
-                }
-                else if ( "39".equals( response.getString( 39 ) ) )
-                {
-                    result = "Declined";
-                }
-                else
-                {
-                    result = "Unknown";
-                }
+                sb.append( "APPROVED" );
             }
-            System.out.println( result + "( " + response.getString( 2 ) + ", " + response.getString( 4 ) + " ) "
-                + elapsedTime + "ms" );
+            else if ( "39".equals( resultCode ) )
+            {
+                sb.append( "DENIED" );
+            }
+            else
+            {
+                sb.append( "UNKNOWN" );
+            }
+
+            System.out.println( sb.toString() );
         }
-        catch ( ISOException e )
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            mux.stop();
-            channelAdaptor.stop();
-        }
+
+        System.out.println( "Complete." );
     }
 
     public static Map<String, String> getAccountsAndAmounts( String filename )
@@ -146,47 +82,24 @@ public class Message0100Sender
         return accountsAndAmounts;
     }
 
-    public static ISOMsg getMessage( InputStream is, ISOPackager packager )
-        throws IOException, ISOException
-    {
-        try
-        {
-            byte[] b = new byte[is.available()];
-            is.read( b );
-            ISOMsg m = new ISOMsg();
-            m.setPackager( packager );
-            m.unpack( b );
-            return m;
-        }
-        finally
-        {
-            is.close();
-        }
-    }
-
     public static void main( String[] args )
         throws Exception
     {
         Map<String, String> accountsAndAmounts = getAccountsAndAmounts( "data.csv" );
 
-        ISOMsg requestTemplate =
-            getMessage( Message0100Sender.class.getClassLoader().getResourceAsStream( "messages/request/0100_1.xml" ),
-                        new XMLPackager() );
-        requestTemplate.setPackager( new BASE24Packager() );
-
         int messageCount = 0;
         for ( String account : accountsAndAmounts.keySet() )
         {
-            ISOMsg requestClone = (ISOMsg) requestTemplate.clone();
-            requestClone.set( 11, ISOUtil.padleft( Integer.toString( messageCount ), 6, '0' ) );
+            Message0100Sender sender = new Message0100Sender( "" + messageCount );
 
-            requestClone.set( 2, account );
+            ISOMsg request = sender.getMessage();
+            request.set( 2, account );
 
             BigDecimal amount = new BigDecimal( accountsAndAmounts.get( account ) );
+            request.set( 4, ISOUtil.zeropad( amount.scaleByPowerOfTen( 2 ).longValue(), 12 ) );
 
-            requestClone.set( 4, ISOUtil.zeropad( amount.scaleByPowerOfTen( 2 ).longValue(), 12 ) );
+            sender.send();
 
-            new Thread( new Message0100Sender( requestClone, "" + messageCount ) ).start();
             messageCount++;
         }
     }
