@@ -120,9 +120,7 @@ public abstract class TemplatedMessageSender
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
 
-        System.out.println( ( message == null ? "Timed out: " : "Elapsed time: " ) + elapsedTime + "ms" );
-
-        afterSend( message );
+        afterSend( message, elapsedTime );
     }
 
     public void send()
@@ -132,5 +130,5 @@ public abstract class TemplatedMessageSender
 
     public abstract void beforeSend( ISOMsg request );
 
-    public abstract void afterSend( ISOMsg response );
+    public abstract void afterSend( ISOMsg response, long elapsedTime );
 }

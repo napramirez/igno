@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOUtil;
@@ -17,6 +20,16 @@ import com.napramirez.igno.common.message.MessageTemplate;
 public class Message0100Sender
     extends TemplatedMessageSender
 {
+    private static Integer rx = 0;
+
+    private static Integer tx = 0;
+
+    private static Long min = Long.MAX_VALUE;
+
+    private static Long max = 0L;
+
+    private static Long totalTime = 0L;
+
     public Message0100Sender( String id )
         throws Exception
     {
@@ -26,9 +39,14 @@ public class Message0100Sender
     public void beforeSend( ISOMsg request )
     {
         System.out.println( "Sending authorization request '" + getId() + "'..." );
+
+        synchronized ( tx )
+        {
+            tx++;
+        }
     }
 
-    public void afterSend( ISOMsg response )
+    public void afterSend( ISOMsg response, long elapsedTime )
     {
         if ( response != null )
         {
@@ -49,9 +67,27 @@ public class Message0100Sender
             }
 
             System.out.println( sb.toString() );
-        }
 
-        System.out.println( "Complete." );
+            synchronized ( rx )
+            {
+                rx++;
+            }
+
+            synchronized ( totalTime )
+            {
+                totalTime += elapsedTime;
+            }
+
+            synchronized ( min )
+            {
+                min = elapsedTime < min ? elapsedTime : min;
+            }
+
+            synchronized ( max )
+            {
+                max = elapsedTime > max ? elapsedTime : max;
+            }
+        }
     }
 
     public static Map<String, String> getAccountsAndAmounts( String filename )
@@ -86,6 +122,7 @@ public class Message0100Sender
         throws Exception
     {
         Map<String, String> accountsAndAmounts = getAccountsAndAmounts( "data.csv" );
+        ExecutorService executor = Executors.newCachedThreadPool();
 
         int messageCount = 0;
         for ( String account : accountsAndAmounts.keySet() )
@@ -98,9 +135,22 @@ public class Message0100Sender
             BigDecimal amount = new BigDecimal( accountsAndAmounts.get( account ) );
             request.set( 4, ISOUtil.zeropad( amount.scaleByPowerOfTen( 2 ).longValue(), 12 ) );
 
-            sender.send();
+            executor.execute( sender );
 
             messageCount++;
         }
+
+        executor.shutdown();
+
+        try
+        {
+            executor.awaitTermination( Long.MAX_VALUE, TimeUnit.NANOSECONDS );
+        }
+        catch ( InterruptedException e )
+        {
+        }
+
+        System.out.println( "Transmitted: " + tx + ", Received: " + rx );
+        System.out.println( "Min: " + min + "ms, Ave: " + ( totalTime / rx ) + "ms, Max: " + max + "ms" );
     }
 }
