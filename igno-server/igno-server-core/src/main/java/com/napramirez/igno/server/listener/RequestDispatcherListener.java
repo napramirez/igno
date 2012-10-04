@@ -10,6 +10,7 @@ import org.jpos.space.Space;
 import org.jpos.space.SpaceFactory;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * RequestDispatcherListener forwards the request to the switching TransactionManager.
@@ -33,8 +34,8 @@ public class RequestDispatcherListener
     public boolean process( ISOSource source, ISOMsg message )
     {
         TransactionContext ctx = new TransactionContext();
-        ctx.put( "request", message );
-        ctx.tput( "isosource", source );
+        ctx.put( ContextKey.REQUEST_MESSAGE, message );
+        ctx.tput( ContextKey.ISO_MESSAGE_SOURCE, source );
         sp.out( cfg.get( "queue" ), ctx, cfg.getLong( "timeout" ) );
 
         return true;

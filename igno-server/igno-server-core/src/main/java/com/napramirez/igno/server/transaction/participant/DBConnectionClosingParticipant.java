@@ -9,6 +9,7 @@ import org.jpos.transaction.AbortParticipant;
 import org.jpos.util.Log;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * DBConnectionClosingParticipant
@@ -40,8 +41,8 @@ public class DBConnectionClosingParticipant
     private int closeAll( long id, Serializable context, int successResult, int failureResult )
     {
         TransactionContext ctx = (TransactionContext) context;
-        Connection conn = (Connection) ctx.tget( "connection" );
-        CallableStatement cs = (CallableStatement) ctx.tget( "statement" );
+        Connection conn = (Connection) ctx.tget( ContextKey.DB_CONNECTION );
+        CallableStatement cs = (CallableStatement) ctx.tget( ContextKey.DB_STATEMENT );
 
         try
         {

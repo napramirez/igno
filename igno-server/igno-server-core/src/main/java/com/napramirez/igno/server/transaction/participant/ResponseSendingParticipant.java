@@ -7,6 +7,7 @@ import org.jpos.iso.ISOSource;
 import org.jpos.transaction.TransactionParticipant;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * ResponseSendingParticipant sends the response constructed by the preceding participants.
@@ -25,7 +26,7 @@ public class ResponseSendingParticipant
         }
         else
         {
-            ISOSource source = (ISOSource) ctx.tget( "isosource" );
+            ISOSource source = (ISOSource) ctx.tget( ContextKey.ISO_MESSAGE_SOURCE );
             if ( source == null )
             {
                 return ABORTED;
@@ -38,8 +39,8 @@ public class ResponseSendingParticipant
     public void commit( long id, Serializable context )
     {
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg response = (ISOMsg) ctx.get( "response" );
-        ISOSource source = (ISOSource) ctx.tget( "isosource" );
+        ISOMsg response = (ISOMsg) ctx.get( ContextKey.RESPONSE_MESSAGE );
+        ISOSource source = (ISOSource) ctx.tget( ContextKey.ISO_MESSAGE_SOURCE );
 
         try
         {

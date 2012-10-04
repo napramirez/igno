@@ -7,6 +7,7 @@ import org.jpos.iso.ISOSource;
 import org.jpos.transaction.AbortParticipant;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * MessageRejectingParticipant echoes the request to the client, turning it to a 9xxx message in the process.
@@ -42,8 +43,8 @@ public class MessageRejectingParticipant
     public int prepareForAbort( long id, Serializable context )
     {
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg message = (ISOMsg) ctx.get( "request" );
-        ISOSource source = (ISOSource) ctx.tget( "isosource" );
+        ISOMsg message = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
+        ISOSource source = (ISOSource) ctx.tget( ContextKey.ISO_MESSAGE_SOURCE );
         
         try
         {

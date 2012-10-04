@@ -18,6 +18,7 @@ import com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator;
 import com.napramirez.igno.server.message.field.validation.FieldValidationException;
 import com.napramirez.igno.server.message.field.validation.FieldValidator;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * FieldSyntaxValidatingParticipant - checks if all the fields follow the definitions
@@ -50,8 +51,8 @@ public class FieldSyntaxValidatingParticipant
     public int prepare( long id, Serializable context )
     {
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg request = (ISOMsg) ctx.get( "request" );
-        ProductIndicator pi = (ProductIndicator) ctx.get( ProductIndicator.KEY );
+        ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
+        ProductIndicator pi = (ProductIndicator) ctx.get( ContextKey.PRODUCT_INDICATOR );
 
         String fieldStringValue = null;
         for ( int fieldIndex = 0; fieldIndex <= request.getMaxField(); fieldIndex++ )

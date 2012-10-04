@@ -8,6 +8,7 @@ import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * AuthorizationAdviceProcessingParticipant
@@ -34,12 +35,12 @@ public class AuthorizationAdviceProcessingParticipant
         try
         {
             TransactionContext ctx = (TransactionContext) context;
-            ISOMsg request = (ISOMsg) ctx.get( "request" );
+            ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
 
             ISOMsg response = (ISOMsg) request.clone();
             response.setResponseMTI();
 
-            ctx.put( "response", response );
+            ctx.put( ContextKey.RESPONSE_MESSAGE, response );
 
             long endTime = System.currentTimeMillis();
             long elapsedTime = endTime - startTime;

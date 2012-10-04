@@ -9,6 +9,7 @@ import org.jpos.util.Log;
 import com.napramirez.igno.server.message.field.constants.NetworkManagementInformationCode;
 import com.napramirez.igno.server.message.field.constants.ResponseCode;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * NetworkManagementProcessingParticipant
@@ -29,7 +30,7 @@ public class NetworkManagementProcessingParticipant
         try
         {
             TransactionContext ctx = (TransactionContext) context;
-            ISOMsg request = (ISOMsg) ctx.get( "request" );
+            ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
 
             String netManCode = request.getString( 70 );
 
@@ -50,7 +51,7 @@ public class NetworkManagementProcessingParticipant
             response.setResponseMTI();
             response.set( 39, ResponseCode.POS.APPROVED.toString() );
 
-            ctx.put( "response", response );
+            ctx.put( ContextKey.RESPONSE_MESSAGE, response );
         }
         catch ( Exception e )
         {

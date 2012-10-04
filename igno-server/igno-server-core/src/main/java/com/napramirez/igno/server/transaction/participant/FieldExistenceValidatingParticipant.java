@@ -10,6 +10,7 @@ import org.jpos.transaction.TransactionParticipant;
 import org.jpos.util.Log;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * FieldExistenceValidatingParticipant - checks if all the required fields are present in the message
@@ -49,7 +50,7 @@ public class FieldExistenceValidatingParticipant
         }
 
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg request = (ISOMsg) ctx.get( "request" );
+        ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
         for ( int i = 0; i < requiredFieldStrings.length; i++ )
         {
             int fieldIndex = 0;

@@ -16,6 +16,7 @@ import org.jpos.util.NameRegistrar;
 
 import com.napramirez.igno.server.message.field.Track2Data;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * @author ztorres
@@ -54,7 +55,7 @@ public class FHMProcessingParticipant extends Log implements TransactionParticip
         try
         {
             TransactionContext ctx = ( TransactionContext ) context;
-            ISOMsg request = ( ISOMsg ) ctx.get( "request" );
+            ISOMsg request = ( ISOMsg ) ctx.get( ContextKey.REQUEST_MESSAGE );
             Long pan = null;
             
             String panString = request.getString( 2 );
@@ -75,7 +76,7 @@ public class FHMProcessingParticipant extends Log implements TransactionParticip
             ISOMsg response = ( ISOMsg ) request.clone();
             response.setResponseMTI();
             
-            ctx.put( "response", response );
+            ctx.put( ContextKey.RESPONSE_MESSAGE, response );
             
             long endTime = System.currentTimeMillis();
             long elapsedTime = endTime - startTime;

@@ -17,6 +17,7 @@ import org.jpos.util.NameRegistrar;
 import org.jpos.util.NameRegistrar.NotFoundException;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * DBConnectionOpeningParticipant
@@ -49,8 +50,8 @@ public class DBConnectionOpeningParticipant
             cs = conn.prepareCall( storedProcedure, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE );
 
             TransactionContext ctx = (TransactionContext) context;
-            ctx.tput( "connection", conn );
-            ctx.tput( "statement", cs );
+            ctx.tput( ContextKey.DB_CONNECTION, conn );
+            ctx.tput( ContextKey.DB_STATEMENT, cs );
         }
         catch ( NotFoundException e )
         {

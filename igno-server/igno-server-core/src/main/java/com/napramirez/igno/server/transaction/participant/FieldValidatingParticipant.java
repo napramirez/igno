@@ -16,6 +16,7 @@ import com.napramirez.igno.server.message.field.constants.ProductIndicator;
 import com.napramirez.igno.server.message.field.validation.RequestFormat;
 import com.napramirez.igno.server.message.field.validation.RequestValidator;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * FieldValidatingParticipant will check if all the required fields are present in the message.
@@ -77,7 +78,7 @@ public class FieldValidatingParticipant
     public void commit( long id, Serializable context )
     {
         TransactionContext ctx = ( TransactionContext ) context;
-        ISOMsg isoMsg = ( ISOMsg ) ctx.get( "request" );
+        ISOMsg isoMsg = ( ISOMsg ) ctx.get( ContextKey.REQUEST_MESSAGE );
         try
         {
             for ( int requiredField : requiredFields )
@@ -108,7 +109,7 @@ public class FieldValidatingParticipant
             {
                 fields[index] = cList.get(i); 
             }
-            RequestValidator.validator( (String) ctx.get( ProductIndicator.KEY ), fields, isoMsg);
+            RequestValidator.validator( (String) ctx.get( ContextKey.PRODUCT_INDICATOR ), fields, isoMsg);
         }
         catch ( Exception e )
         {

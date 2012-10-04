@@ -12,6 +12,7 @@ import org.jpos.transaction.TransactionParticipant;
 
 import com.napramirez.igno.server.message.field.constants.ProductIndicator;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * MessageSwitchParticipant routes a message to the appropriate group.
@@ -75,7 +76,7 @@ public class MessageSwitchParticipant
     public String select( long id, Serializable context )
     {
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg request = (ISOMsg) ctx.get( "request" );
+        ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
 
         byte[] pi = getProductIndicator( request.getHeader() );
         StringBuffer group = new StringBuffer();
@@ -90,27 +91,27 @@ public class MessageSwitchParticipant
                     case BYTE_ZERO:
                     {
                         group.append( MTI_NETWORK_MANAGEMENT.equals( mti ) ? mti : GROUP_UNHANDLED );
-                        ctx.put( ProductIndicator.KEY, ProductIndicator.NETWORK_MANAGEMENT_MESSAGE );
+                        ctx.put( ContextKey.PRODUCT_INDICATOR, ProductIndicator.NETWORK_MANAGEMENT_MESSAGE );
                         break;
                     }
                     case BYTE_ONE:
                     {
                         group.append( mti );
                         group.append( GROUP_ATM_SUFFIX );
-                        ctx.put( ProductIndicator.KEY, ProductIndicator.ATM_MESSAGE );
+                        ctx.put( ContextKey.PRODUCT_INDICATOR, ProductIndicator.ATM_MESSAGE );
                         break;
                     }
                     case BYTE_TWO:
                     {
                         group.append( mti );
                         group.append( GROUP_POS_SUFFIX );
-                        ctx.put( ProductIndicator.KEY, ProductIndicator.POS_MESSAGE );
+                        ctx.put( ContextKey.PRODUCT_INDICATOR, ProductIndicator.POS_MESSAGE );
                         break;
                     }
                     case BYTE_EIGHT:
                     {
                         group.append( MTI_FROM_HOST_MAINTENANCE.equals( mti ) ? mti : GROUP_UNHANDLED );
-                        ctx.put( ProductIndicator.KEY, ProductIndicator.FROM_HOST_MAINTENANCE_MESSAGE );
+                        ctx.put( ContextKey.PRODUCT_INDICATOR, ProductIndicator.FROM_HOST_MAINTENANCE_MESSAGE );
                         break;
                     }
                     default:

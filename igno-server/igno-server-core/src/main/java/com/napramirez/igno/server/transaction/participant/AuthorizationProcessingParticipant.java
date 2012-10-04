@@ -14,6 +14,7 @@ import org.jpos.util.Log;
 import com.napramirez.igno.server.message.field.Track2Data;
 import com.napramirez.igno.server.message.field.constants.ResponseCode;
 import com.napramirez.igno.server.transaction.TransactionContext;
+import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 public class AuthorizationProcessingParticipant
     extends Log
@@ -24,7 +25,7 @@ public class AuthorizationProcessingParticipant
         long startTime = System.currentTimeMillis();
 
         TransactionContext ctx = (TransactionContext) context;
-        ISOMsg request = (ISOMsg) ctx.get( "request" );
+        ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
 
         Long pan = getPAN( request );
         double amount = Double.valueOf( request.getString( 4 ) );
@@ -33,7 +34,7 @@ public class AuthorizationProcessingParticipant
         boolean isAuthorized;
         try
         {
-            CallableStatement cs = (CallableStatement) ctx.tget( "statement" );
+            CallableStatement cs = (CallableStatement) ctx.tget( ContextKey.DB_STATEMENT );
 
             cs.setLong( 1, pan );
             cs.setDouble( 2, amount );
@@ -65,7 +66,7 @@ public class AuthorizationProcessingParticipant
             return ABORTED;
         }
 
-        ctx.put( "response", response );
+        ctx.put( ContextKey.RESPONSE_MESSAGE, response );
 
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
