@@ -21,7 +21,7 @@ public class MessageRejectingParticipant
     extends Log
     implements AbortParticipant
 {
-    private static final String MTI_BIT_ONE_REJECT = "9";
+    //private static final String MTI_BIT_ONE_REJECT = "9";
 
     public int prepare( long id, Serializable context )
     {
