@@ -69,7 +69,7 @@
             <property name="field-validator" value="com.napramirez.igno.server.message.field.validation.FieldSyntaxValidator" />
             <property name="field-dictionary" value="com.napramirez.igno.server.message.field.validation.FISFieldDictionary" />
         </participant>
-        <participant class="com.napramirez.igno.server.transaction.participant.ATMFinancailTransactionAdviceProcessingParticipant" logger="Q2" />
+        <participant class="com.napramirez.igno.server.transaction.participant.ATMFinancialTransactionAdviceProcessingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.ResponseSendingParticipant" logger="Q2" />
         <participant class="com.napramirez.igno.server.transaction.participant.MessageRejectingParticipant" logger="Q2" />
     </group>

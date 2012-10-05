@@ -16,7 +16,7 @@ import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  * @author ztorres
  */
-public class ATMFinancailTransactionAdviceProcessingParticipant
+public class ATMFinancialTransactionAdviceProcessingParticipant
     extends Log
     implements TransactionParticipant
 {
