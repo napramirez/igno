@@ -16,6 +16,11 @@ import com.napramirez.igno.server.message.field.constants.ResponseCode;
 import com.napramirez.igno.server.transaction.TransactionContext;
 import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
+/**
+ * AuthorizationProcessingParticipant
+ * 
+ * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
+ */
 public class AuthorizationProcessingParticipant
     extends Log
     implements TransactionParticipant
