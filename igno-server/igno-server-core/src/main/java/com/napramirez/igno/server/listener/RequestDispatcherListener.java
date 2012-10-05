@@ -22,6 +22,7 @@ public class RequestDispatcherListener
 {
     private Configuration cfg;
 
+    @SuppressWarnings( "rawtypes" )
     private Space sp;
 
     public void setConfiguration( Configuration cfg )
@@ -31,6 +32,7 @@ public class RequestDispatcherListener
         sp = SpaceFactory.getSpace( cfg.get( "space" ) );
     }
 
+    @SuppressWarnings( "unchecked" )
     public boolean process( ISOSource source, ISOMsg message )
     {
         TransactionContext ctx = new TransactionContext();
