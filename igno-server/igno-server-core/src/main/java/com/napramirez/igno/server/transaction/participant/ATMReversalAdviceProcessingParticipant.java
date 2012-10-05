@@ -12,7 +12,7 @@ import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
 
 /**
  * ATMReversalAdviceProcessingParticipant
- *
+ * 
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class ATMReversalAdviceProcessingParticipant
@@ -21,6 +21,29 @@ public class ATMReversalAdviceProcessingParticipant
 {
     public int prepare( long id, Serializable context )
     {
+        long startTime = System.currentTimeMillis();
+
+        TransactionContext ctx = (TransactionContext) context;
+        ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
+
+        ISOMsg response = (ISOMsg) request.clone();
+        try
+        {
+            response.setResponseMTI();
+        }
+        catch ( ISOException e )
+        {
+            error( e );
+            return ABORTED;
+        }
+
+        ctx.put( ContextKey.RESPONSE_MESSAGE, response );
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+
+        info( "Elapsed Time: " + elapsedTime + "ms" );
+
         return PREPARED;
     }
 
@@ -30,26 +53,5 @@ public class ATMReversalAdviceProcessingParticipant
 
     public void commit( long id, Serializable context )
     {
-        long startTime = System.currentTimeMillis();
-
-        try
-        {
-            TransactionContext ctx = (TransactionContext) context;
-            ISOMsg request = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
-
-            ISOMsg response = (ISOMsg) request.clone();
-            response.setResponseMTI();
-
-            ctx.put( ContextKey.RESPONSE_MESSAGE, response );
-
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime - startTime;
-
-            info( "Elapsed time: " + elapsedTime + "ms" );
-        }
-        catch ( ISOException e )
-        {
-            throw new RuntimeException( e );
-        }
     }
 }

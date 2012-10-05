@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
 import org.jpos.transaction.AbortParticipant;
+import org.jpos.util.Log;
 
 import com.napramirez.igno.server.transaction.TransactionContext;
 import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
@@ -17,6 +18,7 @@ import com.napramirez.igno.server.transaction.TransactionContext.ContextKey;
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class MessageRejectingParticipant
+    extends Log
     implements AbortParticipant
 {
     private static final String MTI_BIT_ONE_REJECT = "9";
@@ -26,9 +28,6 @@ public class MessageRejectingParticipant
         return PREPARED | READONLY;
     }
 
-    /*
-     * Unhandled messages pass here, only to directly delegate to prepareForAbort()
-     */
     public void commit( long id, Serializable context )
     {
     }
@@ -37,15 +36,12 @@ public class MessageRejectingParticipant
     {
     }
 
-    /*
-     * Aborted participants pass here.
-     */
     public int prepareForAbort( long id, Serializable context )
     {
         TransactionContext ctx = (TransactionContext) context;
         ISOMsg message = (ISOMsg) ctx.get( ContextKey.REQUEST_MESSAGE );
         ISOSource source = (ISOSource) ctx.tget( ContextKey.ISO_MESSAGE_SOURCE );
-        
+
         try
         {
             // FIXME: tampering the mti to a value the client does not expect will leave it waiting, e.g. 0200 to 9200
@@ -55,8 +51,8 @@ public class MessageRejectingParticipant
         }
         catch ( Exception e )
         {
-            // TODO: add elegant logging
-            e.printStackTrace();
+            error( e );
+            return 1;
         }
 
         return 0;
