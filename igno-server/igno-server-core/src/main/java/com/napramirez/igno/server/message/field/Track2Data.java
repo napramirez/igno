@@ -2,14 +2,11 @@ package com.napramirez.igno.server.message.field;
 
 /**
  * Track2Data - Field 035 in FIS ISO Specifications
- *
+ * 
  * @author <a href="mailto:napramirez@gmail.com">Nap Ramirez</a>
  */
 public class Track2Data
 {
-    // LLVAR
-    private static int FIELD_LENGTH_INDICATOR_LENGTH = 2;
-
     private static final String FIELD_SEPARATOR_EQUALS = "=";
 
     private static final String FIELD_SEPARATOR_D = "D";
@@ -28,10 +25,19 @@ public class Track2Data
 
     public Track2Data( String fieldStringValue )
     {
-        String[] fields = fieldStringValue.split( FIELD_SEPARATOR_EQUALS );
+        String[] fields = null;
+
+        if ( fieldStringValue.contains( FIELD_SEPARATOR_EQUALS ) )
+        {
+            fields = fieldStringValue.split( FIELD_SEPARATOR_EQUALS );
+        }
+        else if ( fieldStringValue.contains( FIELD_SEPARATOR_D ) )
+        {
+            fields = fieldStringValue.split( FIELD_SEPARATOR_D );
+        }
+
         pan = fields[0];
     }
-
 
     public int getLength()
     {
