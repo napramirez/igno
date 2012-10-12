@@ -50,8 +50,8 @@
     </modules>
     
     <properties>
-        <jpos.version>1.8.6</jpos.version>
-        <jposee.version>2.0.1-SNAPSHOT</jposee.version>
+        <jpos.version>1.8.6-npn-20120814</jpos.version>
+        <jposee.version>2.0.1-npn-20120814</jposee.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
